@@ -1,0 +1,20 @@
+header {
+  background-color: #333;
+  width: 100%;
+  top: 0;
+  border-bottom:solid;
+
+  border-color: #FF8C00;
+  position: absolute;
+  height: 30px;
+}
+Nav{
+  background-color: #333;
+  width: 40%;
+}
+
+.flex-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
