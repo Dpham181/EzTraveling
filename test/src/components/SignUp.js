@@ -3,13 +3,18 @@ import React, { Component } from 'react';
 import { auth,realdb } from './firebase';
 
 import{FormGroup}  from 'react-bootstrap';
+import './css/signup.css';
 
 
 const SignUpPage = () =>
 
   <div>
-    <h1>SignUp</h1>
-    <SignUpForm />
+    <div className="flex-signup">
+    <div className="flex-in">
+
+         <SignUpForm />
+    </div>
+    </div>
   </div>
   const INITIAL_STATE = {
     email: '',

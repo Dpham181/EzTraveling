@@ -2,30 +2,31 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar , NavItem, Nav} from 'react-bootstrap';
 
-import * as routes from '../constant/routes';
 import './css/header.css';
 const Header = () =>
 <header >
-  <div class="flex-header">
+  <div className="flex-header">
   <Navbar inverse collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <a href="#home">EZ-Traveling</a>
-      </Navbar.Brand>
+        <Link to="/">EZ-Traveling</Link>
+        </Navbar.Brand>
     </Navbar.Header>
-    <Nav>
+    <Nav pullRight>
 
 
-      <NavItem eventKey={2} >
- <Link style={{ textDecoration: 'none' }}to={routes.SIGN_UP}><b>Register</b> </Link>
+      <NavItem eventKey={1} >
+      <Link to="/Register">Register</Link>
+
       </NavItem>
 
-      <NavItem eventKey={3} >
- <Link style={{ textDecoration: 'none' }}to={routes.SIGN_IN}><b>Log In</b></Link>
+      <NavItem eventKey={2}  >
+      <Link to="/Logining">Log In</Link>
       </NavItem>
 
-      <NavItem eventKey={4}>
- <Link style={{ textDecoration: 'none' }}to={routes.CONTACT}><b>Contact</b></Link>
+      <NavItem eventKey={3}>
+      <Link to="/contact">Contact</Link>
+
       </NavItem>
 
     </Nav>

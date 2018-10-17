@@ -33,8 +33,7 @@ const BodyPage = () =>
       const { index, direction } = this.state;
 
       return (
-      <body>
-      <div class="flex-body">
+      <div className="flex-body">
         <Carousel
           activeIndex={index}
           direction={direction}
@@ -55,7 +54,6 @@ const BodyPage = () =>
 
         </Carousel>
         </div>
-      </body>
       );
     }
 

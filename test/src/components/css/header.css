@@ -6,13 +6,13 @@ header {
 
   border-color: #FF8C00;
   position: absolute;
-  height: 30px;
-}
-Nav{
-  background-color: #333;
-  width: 40%;
+  height: 60px;
 }
 
+nav{
+  width: 100%;
+position: fixed;
+}
 .flex-header{
   display: flex;
   justify-content: center;

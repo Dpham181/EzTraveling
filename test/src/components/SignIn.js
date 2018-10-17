@@ -4,13 +4,14 @@ import { withRouter } from 'react-router-dom';
 import{FormGroup}  from 'react-bootstrap';
 
 import { auth} from './firebase/firebase';
-import * as routes from '../constant/routes';
 
 const SignInPage = ({ history }) =>
   <div>
+    <div className="flex-signin">
     <h1>SignIn</h1>
 
-    <SignInForm history={history} />
+    <SignInForm  />
+    </div>
   </div>
 
 const byPropKey = (propertyName, value) => () => ({
@@ -36,9 +37,6 @@ class SignInForm extends Component {
       password,
     } = this.state;
 
-    const {
-      history,
-    } = this.props;
 
     auth.doSignInWithEmailAndPassword(email, password)
       .then(() => {
