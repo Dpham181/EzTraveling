@@ -1,38 +1,111 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Navbar , NavItem, Nav} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Navbar , NavItem, Nav, Glyphicon} from 'react-bootstrap';
+import { auth } from './firebase/firebase';
 
 import './css/header.css';
-const Header = () =>
-<header >
-  <div className="flex-header">
-  <Navbar inverse collapseOnSelect>
-    <Navbar.Header>
-      <Navbar.Brand>
-        <Link to="/">EZ-Traveling</Link>
-        </Navbar.Brand>
-    </Navbar.Header>
-    <Nav pullRight>
 
 
-      <NavItem eventKey={1} >
-      <Link to="/Register">Register</Link>
-
-      </NavItem>
-
-      <NavItem eventKey={2}  >
-      <Link to="/Logining">Log In</Link>
-      </NavItem>
-
-      <NavItem eventKey={3}>
-      <Link to="/contact">Contact</Link>
-
-      </NavItem>
-
-    </Nav>
-  </Navbar>
-  </div>
+class Header extends Component{
+  render() {
+      return (
+<div>
+<header>
+    {this.props.userlogging
+      ? <Headeruser />
+      : <Headernonuser/>
+    }
 </header>
 
+</div>
+);
+}
+}
+class Headeruser extends Component{
+  constructor(props) {
+    super(props);
+    this.state ={
+      useremail:''
+    };
+  }
+  componentDidMount() {
+   auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          useremail: user.email
+        })
+        console.log(user.email)
+
+      } else {
+        this.setState({
+          username: 'unknow'
+
+        })
+
+
+      }
+    })
+  }
+  signout(){
+  auth.signOut().then(function() {
+    console.log('Signed Out');
+  }, function(error) {
+    console.error('Sign Out Error', error);
+  });
+  }
+  render() {
+
+      return (
+
+        <div>
+<Navbar inverse collapseOnSelect>
+  <Navbar.Header>
+    <Navbar.Brand>
+      <p >Welcome {this.state.useremail}</p>
+    </Navbar.Brand>
+    <Navbar.Toggle />
+  </Navbar.Header>
+  <Navbar.Collapse>
+    <Nav pullRight>
+    <NavItem eventKey={1} href='/'onClick={this.signout}>
+    Log Out
+    </NavItem>
+    </Nav>
+  </Navbar.Collapse>
+</Navbar>
+    </div>
+);
+}
+}
+class Headernonuser extends Component{
+
+  render() {
+      return (
+        <div>
+<Navbar inverse collapseOnSelect>
+  <Navbar.Header>
+    <Navbar.Brand>
+      <a href="/"> <Glyphicon glyph="glyphicon glyphicon-home" /></a>
+    </Navbar.Brand>
+    <Navbar.Toggle />
+  </Navbar.Header>
+  <Navbar.Collapse>
+    <Nav pullRight>
+    <NavItem eventKey={1} href="/Register">
+    Register
+    </NavItem>
+    <NavItem eventKey={2} href="/logining">
+    Login
+    </NavItem>
+    <NavItem eventKey={3} href="/contact">
+    Contact
+    </NavItem>
+
+    </Nav>
+  </Navbar.Collapse>
+</Navbar>
+    </div>
+);
+}
+}
 
 export default Header;

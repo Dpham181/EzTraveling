@@ -27,7 +27,6 @@ const Contactpage = () =>
       });
     }
     render() {
-      const { users } = this.state;
 
             return (
               <div>

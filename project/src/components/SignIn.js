@@ -1,98 +1,106 @@
 
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import{FormGroup}  from 'react-bootstrap';
+import { withRouter, Redirect } from 'react-router-dom';
+import{FormGroup, Col, FormControl, Form,ControlLabel, Checkbox, Button}  from 'react-bootstrap';
+import { auth } from './firebase/firebase';
+import './css/signin.css';
 
-import { auth} from './firebase/firebase';
-
-const SignInPage = ({ history }) =>
+const SignInPage = () =>
   <div>
     <div className="flex-signin">
-    <h1>SignIn</h1>
-
-    <SignInForm  />
+    <SignInForm />
     </div>
   </div>
 
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
-});
 
-const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
-};
 
 class SignInForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...INITIAL_STATE };
+      this.state = {
+        email:'',
+        password:'',
+        redirect:false,
+        error:null
+        }
+
+
+
+     this.login= this.login.bind(this);
+     this.onChange= this.onChange.bind(this);
   }
 
-  onSubmit = (event) => {
-    const {
-      email,
-      password,
-    } = this.state;
 
 
-    auth.doSignInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.setState({ ...INITIAL_STATE });
+login(event){
+  var email = this.state.email;
+  var password = this.state.password;
+auth.signInWithEmailAndPassword(email, password).then((result) => {
 
-      })
-      .catch(error => {
-        this.setState(byPropKey('error', error));
-      });
+    this.setState({redirect:true });
+    console.log('loggning');
 
-    event.preventDefault();
+  })
+  .catch(error => {
+    this.setState({error:error});
+    alert(this.state.error);
+
+  });
+
+event.preventDefault();
+}
+  onChange(e){
+    this.setState({[e.target.name]:e.target.value});
+    console.log(this.state);
+
   }
 
   render() {
-    const {
-      email,
-      password,
-      error,
-    } = this.state;
 
-    const isInvalid =
-      password === '' ||
-      email === '';
+    if(this.state.redirect){
+      return (<Redirect to={'/User'}/>)
+    }
 
     return (
 
-      <form horizontal onSubmit={this.onSubmit}>
+      <div>
+         <Form horizontal>
+     <FormGroup controlId="formHorizontalEmail">
+       <Col componentClass={ControlLabel} sm={2}>
+         Email
+       </Col>
+       <Col sm={10}>
+         <FormControl type="text" name="email" required placeholder="Username" onChange={this.onChange} />
+       </Col>
+     </FormGroup>
 
-        <FormGroup controlId="formHorizontalEmail">
-              <input
-              id="formControlsEmail"
+     <FormGroup controlId="formHorizontalPassword">
+       <Col componentClass={ControlLabel} sm={2}>
+         PassW
+       </Col>
+       <Col sm={10}>
+         <FormControl type="password" name="password" required placeholder="Password" onChange={this.onChange} />
+       </Col>
+     </FormGroup>
 
-                value={email}
-                onChange={event => this.setState(byPropKey('email', event.target.value))}
-                type="text"
-                placeholder="Email Address"
-                />
-              </FormGroup>
-        <FormGroup controlId="formHorizontalPassword">
+     <FormGroup>
+       <Col smOffset={2} sm={10}>
+         <Checkbox>Remember me</Checkbox>
+       </Col>
+       <Col smOffset={2} sm={10}>
+         <span className="psw">Forgot <a href="/PassForget">password?</a></span>
+       </Col>
 
-              <input
-              id="formControlsText"
+     </FormGroup>
 
-                value={password}
-                onChange={event => this.setState(byPropKey('password', event.target.value))}
-                type="password"
-                placeholder="Password"
-                />
-
-            </FormGroup>
-            <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
-
-        { error && <p>{error.message}</p> }
-      </form>
+     <FormGroup>
+       <Col smOffset={2} sm={10}>
+         <Button type="submit" className="button success" value="Login" onClick={this.login}>Sign in</Button>
+       </Col>
+     </FormGroup>
+   </Form>
+         </div>
     );
   }
 }

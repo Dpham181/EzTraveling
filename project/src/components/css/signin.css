@@ -1,0 +1,10 @@
+.flex-signin{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  height: 500px;
+  width: 100%;
+  border: 5px solid #333;
+}
