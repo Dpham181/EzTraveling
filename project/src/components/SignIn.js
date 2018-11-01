@@ -1,17 +1,18 @@
 
 import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
-import{FormGroup, Col, FormControl, Form,ControlLabel, Checkbox, Button}  from 'react-bootstrap';
+import { Container, Row, Col, Input, Button, Fa, Card, CardBody, ModalFooter } from 'mdbreact';
 import { auth } from './firebase/firebase';
 import './css/signin.css';
 
 const SignInPage = () =>
-  <div>
+<div>
+  <div class="signin-bg">
     <div className="flex-signin">
     <SignInForm />
     </div>
   </div>
-
+</div>
 
 
 class SignInForm extends Component {
@@ -63,44 +64,26 @@ event.preventDefault();
     }
 
     return (
+      <Container>
+              <Row className="flex-container">
+                <Col md="6">
+                  <form >
+                    <p className="h5 text-center mb-4">Sign In</p>
+                    <div className="grey-text">
+                      <Input label="Your email"   name="email"  onChange={this.onChange} required icon="envelope" group type="email" validate error="wrong" success="right"/>
+                      <Input label="Your password"  name="password"  onChange={this.onChange} required icon="exclamation-triangle" group type="password" validate error="wrong" success="right"/>
+                    </div>
+                    <div className="text-center">
+                      <Button color="primary" onClick ={this.login} >Login In</Button>
+                    </div>
+                    <p className="textp">Forgot? <a href="/PassForget">Pass</a></p>
 
-      <div>
-         <Form horizontal>
-     <FormGroup controlId="formHorizontalEmail">
-       <Col componentClass={ControlLabel} sm={2}>
-         Email
-       </Col>
-       <Col sm={10}>
-         <FormControl type="text" name="email" required placeholder="Username" onChange={this.onChange} />
-       </Col>
-     </FormGroup>
+                    <p className="textp">Not a member? <a href="/Register"> Sign Up</a></p>
 
-     <FormGroup controlId="formHorizontalPassword">
-       <Col componentClass={ControlLabel} sm={2}>
-         PassW
-       </Col>
-       <Col sm={10}>
-         <FormControl type="password" name="password" required placeholder="Password" onChange={this.onChange} />
-       </Col>
-     </FormGroup>
-
-     <FormGroup>
-       <Col smOffset={2} sm={10}>
-         <Checkbox>Remember me</Checkbox>
-       </Col>
-       <Col smOffset={2} sm={10}>
-         <span className="psw">Forgot <a href="/PassForget">password?</a></span>
-       </Col>
-
-     </FormGroup>
-
-     <FormGroup>
-       <Col smOffset={2} sm={10}>
-         <Button type="submit" className="button success" value="Login" onClick={this.login}>Sign in</Button>
-       </Col>
-     </FormGroup>
-   </Form>
-         </div>
+                  </form>
+                </Col>
+              </Row>
+            </Container>
     );
   }
 }

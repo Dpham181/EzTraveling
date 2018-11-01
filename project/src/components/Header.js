@@ -24,26 +24,8 @@ class Headeruser extends Component{
   constructor(props) {
     super(props);
     this.state ={
-      useremail:''
+      useremail:'',
     };
-  }
-  componentDidMount() {
-   auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({
-          useremail: user.email
-        })
-        console.log(user.email)
-
-      } else {
-        this.setState({
-          username: 'unknow'
-
-        })
-
-
-      }
-    })
   }
   signout(){
   auth.signOut().then(function() {
@@ -59,16 +41,19 @@ class Headeruser extends Component{
         <div>
 <Navbar inverse collapseOnSelect>
   <Navbar.Header>
-    <Navbar.Brand>
-      <p >Welcome {this.state.useremail}</p>
-    </Navbar.Brand>
+
+    <img  width= "1000px" height="55px" src={require('./img/logo.png')} />
+
     <Navbar.Toggle />
   </Navbar.Header>
   <Navbar.Collapse>
     <Nav pullRight>
-    <NavItem eventKey={1} href='/'onClick={this.signout}>
-    Log Out
-    </NavItem>
+    <NavItem eventKey={1}  href='/contact'>
+    <Glyphicon  glyph="glyphicon glyphicon-phone-alt" />
+     </NavItem>
+    <NavItem eventKey={2} href='/'onClick={this.signout}>
+    <Glyphicon glyph="glyphicon glyphicon-log-out" />
+     </NavItem>
     </Nav>
   </Navbar.Collapse>
 </Navbar>

@@ -12,7 +12,8 @@ import Contactpage from './Contact';
 import Footerpage from './footer';
 import ForgetPasspage from './ForgetPass';
 import UserPage from './Userpage';
-
+import "font-awesome/css/font-awesome.min.css";
+import "mdbreact/dist/css/mdb.css";
 import firebase from 'firebase/app';
 
 class App extends Component {
@@ -23,7 +24,7 @@ class App extends Component {
     };
   }
   componentDidMount() {
-   this.AuthListener=firebase.auth().onAuthStateChanged((user) => {
+  firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           userlogging: true
@@ -39,9 +40,7 @@ class App extends Component {
       }
     })
   }
-  componentWillUnmount() {
-      this.AuthListener();
-    }
+
   render() {
       return (
    <Router >
@@ -51,7 +50,7 @@ class App extends Component {
 
       <Route exact path="/" component={BodyPage}/>
       <Route path="/contact" component={Contactpage}/>
-      <Route path="/Register" component={SignUpPage}/>
+      <Route path="/Register"  component={SignUpPage}/>
       <Route path="/Logining"  component={SignInPage}/>
       <Route path="/PassForget"  component={ForgetPasspage}/>
       <Route path="/User"  component={UserPage}/>

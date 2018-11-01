@@ -1,5 +1,4 @@
-
-.flex-signup{
+.forgot-bg{
   background-image: url("../img/bg.jpg");
 
   display: flex;
@@ -9,7 +8,7 @@
   height: 700px;
 
 }
-.flex-in{
+.forgot-flex{
 
   display: flex;
   align-items:center;
@@ -23,7 +22,7 @@
 .flex-container{
   display: flex;
   justify-content: center;
-  color: #333;
+
   width: 100%;
 
 }

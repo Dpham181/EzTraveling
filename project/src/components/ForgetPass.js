@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import{FormGroup, Col, FormControl, Form,ControlLabel, Button}  from 'react-bootstrap';
+import './css/forgotpass.css';
 
 import { auth } from './firebase/firebase';
 
 const ForgetPasspage = () =>
 <div>
+<div className="forgot-bg">
+<div className="forgot-flex">
 <ForgetPassForm />
+</div>
+</div>
 </div>
 
 class ForgetPassForm extends Component {
@@ -70,7 +75,7 @@ event.preventDefault();
 
      <FormGroup>
        <Col smOffset={2} sm={10}>
-         <Button type="submit" className="button success" value="Login" onClick={this.sendpass}>Sign in</Button>
+         <Button type="submit" className="button success" value="Login" onClick={this.sendpass}>Sent By Mail</Button>
        </Col>
      </FormGroup>
    </Form>
