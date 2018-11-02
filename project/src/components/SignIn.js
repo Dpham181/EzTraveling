@@ -1,13 +1,13 @@
 
 import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
-import { Container, Row, Col, Input, Button, Fa, Card, CardBody, ModalFooter } from 'mdbreact';
+import { Container, Row, Col, Input, Button } from 'mdbreact';
 import { auth } from './firebase/firebase';
 import './css/signin.css';
 
 const SignInPage = () =>
 <div>
-  <div class="signin-bg">
+  <div className="signin-bg">
     <div className="flex-signin">
     <SignInForm />
     </div>

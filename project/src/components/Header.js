@@ -42,7 +42,7 @@ class Headeruser extends Component{
 <Navbar inverse collapseOnSelect>
   <Navbar.Header>
 
-    <img  width= "1000px" height="55px" src={require('./img/logo.png')} />
+    <img  width= "1000px" height="55px" alt="900x500"  src={require('./img/logo.png')} />
 
     <Navbar.Toggle />
   </Navbar.Header>

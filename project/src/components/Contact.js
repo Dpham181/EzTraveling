@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './css/contact.css';
-import { realdb } from './firebase/firebase';
-import { Container, Row, Col, Input, Buttonm ,Fa , Button} from 'mdbreact';
+import { Container, Row, Col, Input, Fa , Button} from 'mdbreact';
 
 const Contactpage = () =>
 <div>
