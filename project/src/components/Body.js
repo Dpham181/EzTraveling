@@ -1,58 +1,72 @@
 import React, { Component } from 'react';
-import  { Carousel } from 'react-bootstrap';
+import  {Carousel, CarouselCaption, CarouselInner, CarouselItem, View, Mask, Container } from 'mdbreact';
 
 
 import './css/body.css';
 
 const BodyPage = () =>
 <div>
+<div className="fbody">
+
+<div className="flex-body">
   <BODY />
+
+  </div>
+</div>
 </div>
  class BODY extends Component {
-    constructor(props, context) {
-      super(props, context);
 
-      this.handleSelect = this.handleSelect.bind(this);
 
-      this.state = {
-        index: 0,
-        direction: null
-      };
-    }
 
-    handleSelect(selectedIndex, e) {
-      alert(`selected=${selectedIndex}, direction=${e.direction}`);
-      this.setState({
-        index: selectedIndex,
-        direction: e.direction
-      });
-    }
 
     render() {
-      const { index, direction } = this.state;
 
       return (
-      <div className="flex-body">
+        <Container>
         <Carousel
-          activeIndex={index}
-          direction={direction}
-          onSelect={this.handleSelect}
-        >
-          <Carousel.Item>
-            <img width={900} height={500} alt="900x500"   src={require('./img/1.jpg')} />
+          activeItem={1}
+          length={4}
+          showControls={true}
+          showIndicators={false}
+          className="z-depth-1">
+          <CarouselInner>
+            <CarouselItem itemId="1">
+              <View>
+                <img className="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(68).jpg" alt="First slide" />
+                <Mask overlay="black-light"></Mask>
+              </View>
+              <CarouselCaption>
 
-          </Carousel.Item>
-          <Carousel.Item>
-            <img width={958} height={500}  alt="900x500"  src={require('./img/2.jpg')} />
+              </CarouselCaption>
+            </CarouselItem>
+            <CarouselItem itemId="2">
+              <View>
+                <img className="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(99).jpg" alt="Second slide" />
+                <Mask overlay="black-strong"></Mask>
+              </View>
+              <CarouselCaption>
+              </CarouselCaption>
+            </CarouselItem>
+            <CarouselItem itemId="3">
+              <View>
+                <img className="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(17).jpg" alt="Third slide" />
+                <Mask overlay="black-slight"></Mask>
+              </View>
+              <CarouselCaption>
+              </CarouselCaption>
+            </CarouselItem>
+            <CarouselItem itemId="4">
+              <View>
+                <img className="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20%28143%29.jpg" alt="Mattonit's item" />
+                <Mask overlay="black-light"></Mask>
+              </View>
+              <CarouselCaption>
 
-          </Carousel.Item>
-          <Carousel.Item>
-            <img width={958} height={500}  alt="900x500"  src={require('./img/3.jpg')} />
-
-          </Carousel.Item>
-
+              </CarouselCaption>
+            </CarouselItem>
+          </CarouselInner>
         </Carousel>
-        </div>
+      </Container>
       );
     }
 
