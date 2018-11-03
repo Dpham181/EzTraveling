@@ -7,56 +7,51 @@ import {
 import './css/user.css';
 
 
-  class UserPage extends Component {
+const UserPage = () =>
+<div>
+<div className="user-page">
+  <div className="flex-user">
+    <UserPageContexts />
+</div>
+  </div>
+</div>
+
+class UserPageContexts extends Component {
     constructor(props) {
       super(props);
       this.state={
         users:[],
       };
-      this.bindingdata= this.bindingdata.bind(this);
 
     }
 
-    bindingdata(){
-      let listusers =[];
+componentDidMount() {
+   const userref = realdb.ref().child('users');
 
-      realdb.ref("users").once('value', function(snapshot){
+   userref.once("value", snap => {
+       // Handle state
+       let listusers = []
+       snap.forEach(child => {
+         let user ={
 
-          snapshot.forEach(function(data){
-          let user ={
-
-            email:data.val().email,
-            fullname:data.val().fullname,
-            id: data.val().id,
-
-          }
-           listusers.push(user);
-
-         });
-
-         console.log(listusers);
-         for(var i = 0 ; i < listusers.size ; i++){
-           this.setState({users:listusers[i]});
+           email:child.val().email,
+           fullname:child.val().fullname,
+           id: child.val().id
 
          }
-
-        });
-
-
-    }
-    componentDidMount () {
-      this.bindingdata();
-
+           listusers.push(user.email);
+       });
+       this.setState({users: listusers})
+   });
   }
 
-
     render() {
+      const listofUsers = this.state.users.map(data => <li>Users: {data}</li>);
 
             return (
-              <div className="flex-user">
-               <li> {this.state.users} </li>
-
-            </div>
+              <div >
+            {listofUsers}
+              </div>
 
                    );
 
