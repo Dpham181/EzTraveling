@@ -20,14 +20,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      userlogging:false
+      userlogging:false,
     };
   }
   componentDidMount() {
   firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
-          userlogging: true
+          userlogging: true,
         })
 
       } else {
@@ -53,7 +53,7 @@ class App extends Component {
       <Route path="/Register"  component={SignUpPage}/>
       <Route path="/Logining"  component={SignInPage}/>
       <Route path="/PassForget"  component={ForgetPasspage}/>
-      <Route path="/User"  component={UserPage}/>
+      <Route path="/User"   userlogging={this.state.userlogging} component={UserPage}/>
 
       <Footerpage />
 

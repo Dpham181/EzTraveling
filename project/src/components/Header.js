@@ -23,11 +23,28 @@ class Header extends Component{
 class Headeruser extends Component{
   constructor(props) {
     super(props);
-    this.state ={
-      useremail:'',
-    };
+    this.state={
+      useremail:[],
+
+    }
   }
+
+  componentDidMount(){
+    var user = auth.currentUser;
+    var userinfo=[];
+    if (user != null) {
+    userinfo.push(user.email);
+
+  }
+  console.log(userinfo);
+
+  this.setState({useremail:userinfo});
+  console.log(this.state.useremail);
+
+  }
+  
   signout(){
+
   auth.signOut().then(function() {
     console.log('Signed Out');
   }, function(error) {
@@ -35,16 +52,14 @@ class Headeruser extends Component{
   });
   }
   render() {
+   const cunrrentuser = this.state.useremail.map((data,i)=> <p key={i}>Welcome !! {data}</p>);
 
       return (
 
         <div>
 <Navbar inverse collapseOnSelect>
   <Navbar.Header>
-
-    <img  width= "1000px" height="55px" alt="900x500"  src={require('./img/logo.png')} />
-
-    <Navbar.Toggle />
+{cunrrentuser}
   </Navbar.Header>
   <Navbar.Collapse>
     <Nav pullRight>
@@ -54,6 +69,10 @@ class Headeruser extends Component{
     <NavItem eventKey={2} href='/'onClick={this.signout}>
     <Glyphicon glyph="glyphicon glyphicon-log-out" />
      </NavItem>
+     <NavItem eventKey={3} href='/'onClick={this.signout}>
+     <p> {this.state.usermail} </p>
+
+      </NavItem>
     </Nav>
   </Navbar.Collapse>
 </Navbar>

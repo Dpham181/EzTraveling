@@ -10,7 +10,6 @@ const BodyPage = () =>
 
 <div className="flex-body">
   <BODY />
-
   </div>
 </div>
 </div>
@@ -23,6 +22,9 @@ const BodyPage = () =>
 
       return (
         <Container>
+        <p >Introduction </p>
+        <p> This website will help a lot of travel for taking less time of searching. They use all in one like our website to plan for all the trip instead of searching multiple websites for renting a car, or hotel. In result, they can easily book everything on our website.
+   </p>
         <Carousel
           activeItem={1}
           length={4}
@@ -72,4 +74,5 @@ const BodyPage = () =>
 
 
 }
+
 export default BodyPage;
