@@ -29,5 +29,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "datatables.net": "^1.10.19",
+    "jquery": "^3.3.1"
+  }
 }
