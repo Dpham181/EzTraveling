@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
+import {Redirect,withRouter } from 'react-router-dom';
 import { Container, Row, Col, Input, Button } from 'mdbreact';
 import { auth } from './firebase/firebase';
 import './css/signin.css';

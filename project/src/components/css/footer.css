@@ -5,5 +5,9 @@ footer{
   border-top: 5px solid ;
   border-color: #FF8C00;
   font-family: nyt-franklin,Helvetica Neue,Arial,sans-serif;
-
+  bottom:0;
+  height: 250px;
+}
+a{
+  font-size: 16px;
 }

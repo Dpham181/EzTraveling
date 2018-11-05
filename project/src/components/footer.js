@@ -11,8 +11,8 @@ const Footerpage = () =>
       <h5 className="title">About Us</h5>
       <p>Project Name:   EzTravling</p>
       <p>  Team Members:  </p>
-      <p> Enrique Mendoza( <a href='#'> emendoza.2@csu.fullerton.edu </a>) </p>
-      <p>  Danh Pham ( <a href='#'> danhpham312@gmail.com </a>) </p>
+      <p> Enrique Mendoza( emendoza.2@csu.fullerton.edu ) </p>
+      <p>  Danh Pham ( danhpham312@gmail.com) </p>
 
       </Col>
       <Col md="6">

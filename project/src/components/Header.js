@@ -42,7 +42,7 @@ class Headeruser extends Component{
   console.log(this.state.useremail);
 
   }
-  
+
   signout(){
 
   auth.signOut().then(function() {
@@ -95,13 +95,13 @@ class Headernonuser extends Component{
   <Navbar.Collapse>
     <Nav pullRight>
     <NavItem eventKey={1} href="/Register">
-    Register
+    <Glyphicon glyph="glyphicon glyphicon-pencil" /> Register
     </NavItem>
     <NavItem eventKey={2} href="/logining">
-    Login
+    <Glyphicon glyph="glyphicon glyphicon-user" /> Login
     </NavItem>
     <NavItem eventKey={3} href="/contact">
-    Contact
+    <Glyphicon glyph="glyphicon glyphicon-envelope" /> Contact
     </NavItem>
 
     </Nav>
