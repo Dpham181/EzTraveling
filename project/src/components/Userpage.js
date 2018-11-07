@@ -6,16 +6,24 @@ import {
 } from './firebase/firebase';
 import './css/user.css';
 import {Redirect } from 'react-router-dom';
-
-
+import { MDBBtn, MDBTable, MDBTableBody, MDBTableHead  } from 'mdbreact';
 
 class UserPage extends Component{
   constructor(props) {
     super(props);
     this.state={
         users:[],
+        goldpackets:[],
+        silverpackets:[
+          {
+            name:"",
+            star:"",
+          }
+        ],
+
       gold:false,
-      silver:false
+      silver:false,
+      redirect:false
     };
     this.GoldPackets= this.GoldPackets.bind(this);
     this.SilverPackets= this.SilverPackets.bind(this);
@@ -24,33 +32,75 @@ class UserPage extends Component{
   GoldPackets(){
     this.setState({gold:true});
     console.log("clicked");
+    if(this.state.silver === true){
+      this.setState({silver:false});
+    }
   }
   SilverPackets(){
     this.setState({silver:true});
-
+    if(this.state.gold === true){
+      this.setState({gold:false});
+    }
   }
+
   componentDidMount() {
+
+
+
 
 
     var user = auth.currentUser;
     if(user){
 
-     const userref = realdb.ref().child('users');
-
-     userref.once("value", snap => {
+     const goldref = realdb.ref().child('Gold/Fight');
+     goldref.once("value", snap => {
          // Handle state
-         let listusers = []
+         let listFight = []
          snap.forEach(child => {
-           let user ={
+           let tickets ={
 
-             email:child.val().email,
-             fullname:child.val().fullname,
+             name:child.val().name,
+             Stars:child.val().Stars,
+             TicketStatus:child.val().TicketStatus,
+             Price:child.val().Price,
+             contacts:child.val().contacts,
+
              id: child.val().id
 
            }
-             listusers.push(user.email);
+             listFight.push(tickets.Stars);
          });
-         this.setState({users: listusers})
+         this.setState({goldpackets: listFight})
+     });
+
+     const silverref = realdb.ref().child('Silver/Fight');
+     silverref.once("value", snap => {
+         // Handle state
+
+
+         let listFightS = []
+         snap.forEach(child => {
+            class f{
+              constructor(f,n,s){
+                this.f= f;
+                this.n= n;
+                this.s=s;
+              }
+            }
+           let ticketsS ={
+
+             name:child.val().name,
+             Stars:child.val().Stars,
+             TicketStatus:child.val().TicketStatus,
+             Price:child.val().Price,
+             contacts:child.val().contacts,
+
+             id: child.val().id
+
+           }
+             listFightS.push(ticketsS.name);
+         });
+         this.setState({silverpackets: listFightS})
      });
 
    }
@@ -61,16 +111,13 @@ class UserPage extends Component{
    }
                 }
   render() {
-    const listofUsers = this.state.users.map((data,i) => <li key={i}>Users: {data}</li>);
-
-    if(this.state.gold){
-      return (
-        <div >
-        {listofUsers}
-        </div>
-
-       )
+    const listofFight = this.state.goldpackets.map((data,i) => <tr key={i}>{data}</tr>);
+    const listofFightS = this.state.silverpackets.map((data,i) => <tr key={i}>{data}</tr>);
+    console.log(this.state.silverpackets);
+    if(this.state.redirect){
+      return (<Redirect to={'/Logining'}/>);
     }
+
       return (
 
         <div>
@@ -110,80 +157,56 @@ class UserPage extends Component{
 
 
       </div>
-
           <div className="flex-user">
+          {
+            this.state.gold || this.state.silver
+        ?(
+
+          <table id="dtBasicExample" >
+            <thead>
+              <tr>
+                <th className="th-bg">Tickets Name
+                  <i className="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
+
+              </tr>
+            </thead>
+
+            {
+              this.state.gold
+              ?
+              (<tbody>{listofFight}</tbody>)
+              :null
+            }
+            {
+              this.state.silver
+              ?
+              (<tbody>{listofFightS}</tbody>)
+              :null
+            }
 
 
 
+            <tfoot>
+              <tr>
+                <th>Email
+                </th>
+
+              </tr>
+            </tfoot>
+          </table>
+        )
+        :null
+}
         </div>
           </div>
         </div>
-);
-}
-}
-class UserPageContexts extends Component {
-    constructor(props) {
-      super(props);
-      this.state={
-        users:[],
-        redirect:false
-      };
-    }
 
-componentDidMount() {
-
-
-  var user = auth.currentUser;
-  if(user){
-
-   const userref = realdb.ref().child('users');
-
-   userref.once("value", snap => {
-       // Handle state
-       let listusers = []
-       snap.forEach(child => {
-         let user ={
-
-           email:child.val().email,
-           fullname:child.val().fullname,
-           id: child.val().id
-
-         }
-           listusers.push(user.email);
-       });
-       this.setState({users: listusers})
-   });
-
- }
-
- else {
-   console.log("not user");
-   this.setState({redirect:true});
- }
-              }
-
-    render() {
-      if(this.state.redirect){
-        return (<Redirect to={'/Logining'}/>)
-      }
-      const listofUsers = this.state.users.map((data,i) => <li key={i}>Users: {data}</li>);
-
-            return (
-              <div >
-
-                {listofUsers}
-
-
-
-              </div>
-
-
-                   );
-
+       )
     }
 
 
-  }
+}
 
 
 export default UserPage;
