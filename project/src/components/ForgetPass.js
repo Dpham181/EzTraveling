@@ -69,7 +69,7 @@ event.preventDefault();
          Email
        </Col>
        <Col sm={10}>
-         <FormControl type="text" name="email" required placeholder="Username" onChange={this.onChange} />
+         <FormControl type="text" name="email" required placeholder="Your Email" onChange={this.onChange} />
        </Col>
      </FormGroup>
 
