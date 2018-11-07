@@ -14,6 +14,13 @@ class UserPage extends Component{
     this.state={
         users:[],
         goldpackets:[],
+        silverpackets:[
+          {
+            name:"",
+            star:"",
+          }
+        ],
+
       gold:false,
       silver:false,
       redirect:false
@@ -25,10 +32,15 @@ class UserPage extends Component{
   GoldPackets(){
     this.setState({gold:true});
     console.log("clicked");
+    if(this.state.silver === true){
+      this.setState({silver:false});
+    }
   }
   SilverPackets(){
     this.setState({silver:true});
-
+    if(this.state.gold === true){
+      this.setState({gold:false});
+    }
   }
 
   componentDidMount() {
@@ -56,9 +68,39 @@ class UserPage extends Component{
              id: child.val().id
 
            }
-             listFight.push(tickets.name);
+             listFight.push(tickets.Stars);
          });
          this.setState({goldpackets: listFight})
+     });
+
+     const silverref = realdb.ref().child('Silver/Fight');
+     silverref.once("value", snap => {
+         // Handle state
+
+
+         let listFightS = []
+         snap.forEach(child => {
+            class f{
+              constructor(f,n,s){
+                this.f= f;
+                this.n= n;
+                this.s=s;
+              }
+            }
+           let ticketsS ={
+
+             name:child.val().name,
+             Stars:child.val().Stars,
+             TicketStatus:child.val().TicketStatus,
+             Price:child.val().Price,
+             contacts:child.val().contacts,
+
+             id: child.val().id
+
+           }
+             listFightS.push(ticketsS.name);
+         });
+         this.setState({silverpackets: listFightS})
      });
 
    }
@@ -70,6 +112,8 @@ class UserPage extends Component{
                 }
   render() {
     const listofFight = this.state.goldpackets.map((data,i) => <tr key={i}>{data}</tr>);
+    const listofFightS = this.state.silverpackets.map((data,i) => <tr key={i}>{data}</tr>);
+    console.log(this.state.silverpackets);
     if(this.state.redirect){
       return (<Redirect to={'/Logining'}/>);
     }
@@ -132,6 +176,12 @@ class UserPage extends Component{
               this.state.gold
               ?
               (<tbody>{listofFight}</tbody>)
+              :null
+            }
+            {
+              this.state.silver
+              ?
+              (<tbody>{listofFightS}</tbody>)
               :null
             }
 
