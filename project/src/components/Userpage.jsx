@@ -6,7 +6,7 @@ import {
 } from './firebase/firebase';
 import './css/user.css';
 import {Redirect } from 'react-router-dom';
-import { MDBBtn, MDBTable, MDBTableBody, MDBTableHead  } from 'mdbreact';
+import { Table, TableBody, TableHead , Button, Fa } from 'mdbreact';
 
 class UserPage extends Component{
   constructor(props) {
@@ -14,12 +14,8 @@ class UserPage extends Component{
     this.state={
         users:[],
         goldpackets:[],
-        silverpackets:[
-          {
-            name:"",
-            star:"",
-          }
-        ],
+        silverpackets:[],
+
 
       gold:false,
       silver:false,
@@ -44,33 +40,28 @@ class UserPage extends Component{
   }
 
   componentDidMount() {
-
-
-
-
-
     var user = auth.currentUser;
     if(user){
-
      const goldref = realdb.ref().child('Gold/Fight');
      goldref.once("value", snap => {
          // Handle state
-         let listFight = []
+         let listFightG = []
          snap.forEach(child => {
-           let tickets ={
 
-             name:child.val().name,
-             Stars:child.val().Stars,
-             TicketStatus:child.val().TicketStatus,
-             Price:child.val().Price,
-             contacts:child.val().contacts,
+             listFightG.push(
+               {
+               name:child.val().name,
+               Stars:child.val().Stars,
+               TicketStatus:child.val().TicketStatus,
+               Price:child.val().Price,
+               contacts:child.val().contacts,
 
-             id: child.val().id
+               id: child.val().id
 
-           }
-             listFight.push(tickets.Stars);
+             }
+             );
          });
-         this.setState({goldpackets: listFight})
+         this.setState({goldpackets: listFightG})
      });
 
      const silverref = realdb.ref().child('Silver/Fight');
@@ -78,29 +69,27 @@ class UserPage extends Component{
          // Handle state
 
 
-         let listFightS = []
+         let listFightS = [];
          snap.forEach(child => {
-            class f{
-              constructor(f,n,s){
-                this.f= f;
-                this.n= n;
-                this.s=s;
+           listFightS.push(
+               {
+                name:child.val().name,
+                Stars:child.val().Stars,
+                TicketStatus:child.val().TicketStatus,
+                Price:child.val().Price,
+                contacts:child.val().contacts,
+
+                id: child.val().id
+
               }
-            }
-           let ticketsS ={
+        );
 
-             name:child.val().name,
-             Stars:child.val().Stars,
-             TicketStatus:child.val().TicketStatus,
-             Price:child.val().Price,
-             contacts:child.val().contacts,
-
-             id: child.val().id
-
-           }
-             listFightS.push(ticketsS.name);
          });
+
+         console.log(this.state.silverpackets);
          this.setState({silverpackets: listFightS})
+
+
      });
 
    }
@@ -110,9 +99,39 @@ class UserPage extends Component{
      this.setState({redirect:true});
    }
                 }
+
+
   render() {
-    const listofFight = this.state.goldpackets.map((data,i) => <tr key={i}>{data}</tr>);
-    const listofFightS = this.state.silverpackets.map((data,i) => <tr key={i}>{data}</tr>);
+    const tableS = this.state.silverpackets.map((item,i) => (
+   <tr>
+        <td key={i}>{item.id}</td>
+
+       <td key={i}>{item.name}</td>
+
+       <td key={i+1}>{item.Stars}</td>
+       <td key={i+2}>{item.TicketStatus}</td>
+       <td key={i+3}>{item.Price}</td>
+       <td key={i+4}>{item.contacts}</td>
+       <Button tag="a" floating gradient="purple"><Fa icon="plus" /></Button>
+
+   </tr>
+ ))
+   const tableG = this.state.goldpackets.map((item,i) => (
+  <tr>
+       <td key={i}>{item.id}</td>
+
+      <td key={i}>{item.name}</td>
+
+      <td key={i+1}>{item.Stars}</td>
+      <td key={i+2}>{item.TicketStatus}</td>
+      <td key={i+3}>{item.Price}</td>
+      <td key={i+4}>{item.contacts}</td>
+      <Button tag="a" floating gradient="purple"><Fa icon="plus" /></Button>
+
+  </tr>
+))
+
+
     console.log(this.state.silverpackets);
     if(this.state.redirect){
       return (<Redirect to={'/Logining'}/>);
@@ -161,40 +180,36 @@ class UserPage extends Component{
           {
             this.state.gold || this.state.silver
         ?(
+        <div>
+        <Table>
+              <TableHead>
+                <tr>
+                  <th>#</th>
+                  <th>Brand</th>
+                  <th>Stars</th>
+                  <th>TicketStatus</th>
+                  <th>Price</th>
+                  <th>Contacts</th>
+                  <th>Action</th>
 
-          <table id="dtBasicExample" >
-            <thead>
-              <tr>
-                <th className="th-bg">Tickets Name
-                  <i className="fa fa-sort float-right" aria-hidden="true"></i>
-                </th>
-
-              </tr>
-            </thead>
-
-            {
-              this.state.gold
-              ?
-              (<tbody>{listofFight}</tbody>)
-              :null
-            }
+                </tr>
+              </TableHead>
             {
               this.state.silver
-              ?
-              (<tbody>{listofFightS}</tbody>)
+              ?(<TableBody>{tableS}</TableBody>
+)
               :null
             }
+            {
+              this.state.gold
+              ?(<TableBody>{tableG}</TableBody>
+)
+              :null
+            }
+            </Table>
+        </div>
 
 
-
-            <tfoot>
-              <tr>
-                <th>Email
-                </th>
-
-              </tr>
-            </tfoot>
-          </table>
         )
         :null
 }
@@ -202,7 +217,7 @@ class UserPage extends Component{
           </div>
         </div>
 
-       )
+      );
     }
 
 
