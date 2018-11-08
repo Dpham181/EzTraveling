@@ -2,7 +2,7 @@ import React, {
   Component
 } from 'react';
 import {
-  realdb,auth
+  realdb,auth,storage
 } from './firebase/firebase';
 import './css/user.css';
 import {Redirect } from 'react-router-dom';
@@ -15,7 +15,7 @@ class UserPage extends Component{
         users:[],
         goldpackets:[],
         silverpackets:[],
-
+        img:'',
 
       gold:false,
       silver:false,
@@ -38,7 +38,14 @@ class UserPage extends Component{
       this.setState({gold:false});
     }
   }
+  getvalue(){
 
+  }
+  onChange(e){
+    this.setState({[e.target.name]:e.target.value});
+    console.log(this.state);
+
+  }
   componentDidMount() {
     var user = auth.currentUser;
     if(user){
@@ -68,9 +75,15 @@ class UserPage extends Component{
      silverref.once("value", snap => {
          // Handle state
 
+         var pathReference = storage.ref('logo.jpg');
+         var gsReference = storage.refFromURL('gs://eztraveling-feee0.appspot.com/logo.jpg')
+
+
 
          let listFightS = [];
          snap.forEach(child => {
+
+
            listFightS.push(
                {
                 name:child.val().name,
@@ -78,17 +91,15 @@ class UserPage extends Component{
                 TicketStatus:child.val().TicketStatus,
                 Price:child.val().Price,
                 contacts:child.val().contacts,
-
                 id: child.val().id
 
               }
-        );
 
+
+        );
          });
 
-         console.log(this.state.silverpackets);
-         this.setState({silverpackets: listFightS})
-
+         this.setState({silverpackets: listFightS});
 
      });
 
@@ -103,30 +114,35 @@ class UserPage extends Component{
 
   render() {
     const tableS = this.state.silverpackets.map((item,i) => (
+
    <tr>
-        <td key={i}>{item.id}</td>
+        <td key={i+1}>{item.id}</td>
 
-       <td key={i}>{item.name}</td>
+       <td key={i+2}>{item.name}</td>
 
-       <td key={i+1}>{item.Stars}</td>
-       <td key={i+2}>{item.TicketStatus}</td>
-       <td key={i+3}>{item.Price}</td>
-       <td key={i+4}>{item.contacts}</td>
-       <Button tag="a" floating gradient="purple"><Fa icon="plus" /></Button>
+       <td key={i+3}>{item.Stars}</td>
+       <td key={i+4}>{item.TicketStatus}</td>
+       <td key={i+5}>{item.Price}</td>
+       <td key={i+6}>{item.contacts}</td>
+
+      <td><Button name={item.name}  onClick={this.getvalue} floating gradient="purple"><Fa icon="plus" /></Button></td>
+
+
 
    </tr>
+
  ))
-   const tableG = this.state.goldpackets.map((item,i) => (
+   const tableG = this.state.goldpackets.map((item,g=100) => (
   <tr>
-       <td key={i}>{item.id}</td>
+       <td key={g +7}>{item.id}</td>
 
-      <td key={i}>{item.name}</td>
+      <td key={g +8}>{item.name}</td>
 
-      <td key={i+1}>{item.Stars}</td>
-      <td key={i+2}>{item.TicketStatus}</td>
-      <td key={i+3}>{item.Price}</td>
-      <td key={i+4}>{item.contacts}</td>
-      <Button tag="a" floating gradient="purple"><Fa icon="plus" /></Button>
+      <td key={g +9}>{item.Stars}</td>
+      <td key={g+10}>{item.TicketStatus}</td>
+      <td key={g+11}>{item.Price}</td>
+      <td key={g+12}>{item.contacts}</td>
+      <td><Button  floating gradient="purple"><Fa icon="plus" /></Button></td>
 
   </tr>
 ))
