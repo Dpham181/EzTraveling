@@ -2,7 +2,7 @@ import React, {
   Component
 } from 'react';
 import {
-  realdb,auth,storage
+  realdb,auth
 } from './firebase/firebase';
 import './css/user.css';
 import {Redirect } from 'react-router-dom';
@@ -16,13 +16,14 @@ class UserPage extends Component{
         goldpackets:[],
         silverpackets:[],
         img:'',
-
+        Booking:[],
       gold:false,
       silver:false,
       redirect:false
     };
     this.GoldPackets= this.GoldPackets.bind(this);
     this.SilverPackets= this.SilverPackets.bind(this);
+    this.addToCart= this.addToCart.bind(this);
 
   }
   GoldPackets(){
@@ -38,14 +39,7 @@ class UserPage extends Component{
       this.setState({gold:false});
     }
   }
-  getvalue(){
 
-  }
-  onChange(e){
-    this.setState({[e.target.name]:e.target.value});
-    console.log(this.state);
-
-  }
   componentDidMount() {
     var user = auth.currentUser;
     if(user){
@@ -75,11 +69,8 @@ class UserPage extends Component{
      silverref.once("value", snap => {
          // Handle state
 
-         var pathReference = storage.ref('logo.jpg');
-         var gsReference = storage.refFromURL('gs://eztraveling-feee0.appspot.com/logo.jpg')
-
-
-
+    //     var pathReference = storage.ref('logo.jpg');
+    //     var gsReference = storage.refFromURL('gs://eztraveling-feee0.appspot.com/logo.jpg')
          let listFightS = [];
          snap.forEach(child => {
 
@@ -111,6 +102,23 @@ class UserPage extends Component{
    }
                 }
 
+  addToCart( n, s, c, p) {
+                  console.log("add to card working");
+                  this.setState(
+                    {
+                      Booking: {
+                        name: n,
+                        Stars: s,
+                        Contact: c,
+                        Pirce: p
+                              }
+                    }
+                  );
+
+
+                  console.log(this.state.Booking);
+
+                  }
 
   render() {
     const tableS = this.state.silverpackets.map((item,i) => (
@@ -125,7 +133,12 @@ class UserPage extends Component{
        <td key={i+5}>{item.Price}</td>
        <td key={i+6}>{item.contacts}</td>
 
-      <td><Button name={item.name}  onClick={this.getvalue} floating gradient="purple"><Fa icon="plus" /></Button></td>
+    <td><Button  onClick={this.addToCart.bind(this,
+            item.name,
+            item.Stars,
+            item.contacts,
+            item.Price)
+          } floating gradient="purple"><Fa icon="plus" /></Button></td>
 
 
 
