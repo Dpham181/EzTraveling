@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar , NavItem, Nav, Glyphicon} from 'react-bootstrap';
-import { auth } from './firebase/firebase';
+import { auth, realdb} from './firebase/firebase';
 
 import './css/header.css';
 
@@ -25,21 +25,54 @@ class Headeruser extends Component{
     super(props);
     this.state={
       useremail:[],
-
+      cartBooking: [],
+      userid:''
     }
+    this.getbooking= this.getbooking.bind(this);
   }
 
+
+
+getbooking(){
+  var uid = this.state.userid;
+  console.log(uid);
+  const tempref = realdb.ref().child(`tempcartcheckout`);
+  tempref.once("value", snap => {
+      // Handle state
+      let cartlist = []
+      snap.forEach(child => {
+        if (uid === child.val().uid){
+          cartlist.push(
+            {
+            name:child.val().c,
+            Stars:child.val().n,
+            TicketStatus:child.val().p,
+            Price:child.val().s
+
+
+          }
+
+          );
+}
+
+      });
+      this.setState({cartBooking: cartlist})
+      console.log( cartlist);
+      console.log(this.state.cartBooking);
+
+  });
+}
   componentDidMount(){
     var user = auth.currentUser;
     var userinfo=[];
+    let checkoutlist = [];
     if (user != null) {
     userinfo.push(user.email);
+    this.setState({userid:user.uid});
 
   }
-  console.log(userinfo);
-
   this.setState({useremail:userinfo});
-  console.log(this.state.useremail);
+
 
   }
 
@@ -51,6 +84,8 @@ class Headeruser extends Component{
     console.error('Sign Out Error', error);
   });
   }
+
+
   render() {
    const cunrrentuser = this.state.useremail.map((data,i)=> <p key={i}>Welcome !! {data}</p>);
 
@@ -63,13 +98,18 @@ class Headeruser extends Component{
   </Navbar.Header>
   <Navbar.Collapse>
     <Nav pullRight>
+
     <NavItem eventKey={1}  href='/contact'>
     <Glyphicon  glyph="glyphicon glyphicon-phone-alt" />
      </NavItem>
     <NavItem eventKey={2} href='/'onClick={this.signout}>
     <Glyphicon glyph="glyphicon glyphicon-log-out" />
      </NavItem>
-     <NavItem eventKey={3} href='/'onClick={this.signout}>
+     <NavItem eventKey={3} onClick={this.getbooking}>
+     <Glyphicon glyph="glyphicon glyphicon-shopping-cart" />
+     <p> No of items </p>
+      </NavItem>
+     <NavItem eventKey={3} href='/'>
      <p> {this.state.usermail} </p>
 
       </NavItem>

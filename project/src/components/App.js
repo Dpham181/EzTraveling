@@ -21,7 +21,9 @@ class App extends Component {
     super(props);
     this.state ={
       userlogging:false,
+      cartBooking:[],
     };
+    this.cartcheckout= this.cartcheckout.bind(this);
   }
   componentDidMount() {
   firebase.auth().onAuthStateChanged((user) => {
@@ -40,12 +42,14 @@ class App extends Component {
       }
     })
   }
-
+  cartcheckout(){
+    
+  }
   render() {
       return (
    <Router >
     <div>
-      <HeaderPage userlogging={this.state.userlogging}/>
+      <HeaderPage  userlogging={this.state.userlogging}/>
 
 
       <Route exact path="/" component={BodyPage}/>
@@ -53,7 +57,7 @@ class App extends Component {
       <Route path="/Register"  component={SignUpPage}/>
       <Route path="/Logining"  component={SignInPage}/>
       <Route path="/PassForget"  component={ForgetPasspage}/>
-      <Route path="/User"   userlogging={this.state.userlogging} component={UserPage}/>
+      <Route path="/User"  component={UserPage}/>
 
       <Footerpage />
 

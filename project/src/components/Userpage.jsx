@@ -12,7 +12,7 @@ class UserPage extends Component{
   constructor(props) {
     super(props);
     this.state={
-        users:[],
+        uid:'',
         goldpackets:[],
         silverpackets:[],
         img:'',
@@ -43,6 +43,7 @@ class UserPage extends Component{
   componentDidMount() {
     var user = auth.currentUser;
     if(user){
+      this.setState({uid:user.uid});
      const goldref = realdb.ref().child('Gold/Fight');
      goldref.once("value", snap => {
          // Handle state
@@ -114,8 +115,14 @@ class UserPage extends Component{
                               }
                     }
                   );
-
-
+                    var uid = this.state.uid;
+                  realdb.ref(`tempcartcheckout/${uid}`).set({
+                    uid,
+                    n,
+                    s,
+                    c,
+                    p
+                });
                   console.log(this.state.Booking);
 
                   }
