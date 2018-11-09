@@ -103,7 +103,7 @@ class UserPage extends Component{
    }
                 }
 
-  addToCart( n, s, c, p) {
+  addToCart(i, n, s, c, p ) {
                   console.log("add to card working");
                   this.setState(
                     {
@@ -116,13 +116,14 @@ class UserPage extends Component{
                     }
                   );
                     var uid = this.state.uid;
-                  realdb.ref(`tempcartcheckout/${uid}`).set({
+                  realdb.ref(`tempcartcheckout/${uid}/${i}`).set({
                     uid,
                     n,
                     s,
                     c,
                     p
                 });
+                i++;
                   console.log(this.state.Booking);
 
                   }
@@ -141,6 +142,7 @@ class UserPage extends Component{
        <td key={i+6}>{item.contacts}</td>
 
     <td><Button  onClick={this.addToCart.bind(this,
+            item.id,
             item.name,
             item.Stars,
             item.contacts,

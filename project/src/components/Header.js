@@ -36,12 +36,12 @@ class Headeruser extends Component{
 getbooking(){
   var uid = this.state.userid;
   console.log(uid);
-  const tempref = realdb.ref().child(`tempcartcheckout`);
+  const tempref = realdb.ref().child(`tempcartcheckout/${uid}`);
   tempref.once("value", snap => {
       // Handle state
       let cartlist = []
       snap.forEach(child => {
-        if (uid === child.val().uid){
+
           cartlist.push(
             {
             name:child.val().c,
@@ -53,7 +53,7 @@ getbooking(){
           }
 
           );
-}
+
 
       });
       this.setState({cartBooking: cartlist})
@@ -62,14 +62,14 @@ getbooking(){
 
   });
 }
+
   componentDidMount(){
     var user = auth.currentUser;
     var userinfo=[];
-    let checkoutlist = [];
     if (user != null) {
     userinfo.push(user.email);
     this.setState({userid:user.uid});
-
+    this.getbooking();
   }
   this.setState({useremail:userinfo});
 
@@ -107,12 +107,9 @@ getbooking(){
      </NavItem>
      <NavItem eventKey={3} onClick={this.getbooking}>
      <Glyphicon glyph="glyphicon glyphicon-shopping-cart" />
-     <p> No of items </p>
+     <p>  {this.state.cartBooking.length} Items in Cart</p>
       </NavItem>
-     <NavItem eventKey={3} href='/'>
-     <p> {this.state.usermail} </p>
 
-      </NavItem>
     </Nav>
   </Navbar.Collapse>
 </Navbar>
