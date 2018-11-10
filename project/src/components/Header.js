@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Navbar , NavItem, Nav, Glyphicon} from 'react-bootstrap';
 import { auth, realdb} from './firebase/firebase';
+import { Modal, ModalRoute } from 'react-router-modal';
+import { Container, Button, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
 
 import './css/header.css';
 
@@ -26,15 +28,25 @@ class Headeruser extends Component{
     this.state={
       useremail:[],
       cartBooking: [],
-      userid:''
+      userid:'',
+      modal: false
+
+
     }
     this.getbooking= this.getbooking.bind(this);
+
   }
 
 
-
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
 getbooking(){
   var uid = this.state.userid;
+  this.setState({ modal: true });
+
   console.log(uid);
   const tempref = realdb.ref().child(`tempcartcheckout/${uid}`);
   tempref.once("value", snap => {
@@ -44,10 +56,10 @@ getbooking(){
 
           cartlist.push(
             {
-            name:child.val().c,
-            Stars:child.val().n,
-            TicketStatus:child.val().p,
-            Price:child.val().s
+            name:child.val().n,
+            Stars:child.val().s,
+            TicketStatus:child.val().c,
+            Price:child.val().p
 
 
           }
@@ -69,7 +81,6 @@ getbooking(){
     if (user != null) {
     userinfo.push(user.email);
     this.setState({userid:user.uid});
-    this.getbooking();
   }
   this.setState({useremail:userinfo});
 
@@ -88,6 +99,17 @@ getbooking(){
 
   render() {
    const cunrrentuser = this.state.useremail.map((data,i)=> <p key={i}>Welcome !! {data}</p>);
+   const cartviewtable = this.state.cartBooking.map((item,i) => (
+
+  <tr key={i}>
+      <td key={i+1}> {i+1}  </td>
+       <td key={i+2}>{item.name}</td>
+      <td key={i+3}>{item.Stars}</td>
+      <td key={i+4}>{item.TicketStatus}</td>
+      <td key={i+5}>{item.Price}</td>
+
+
+  </tr>));
 
       return (
 
@@ -105,18 +127,58 @@ getbooking(){
     <NavItem eventKey={2} href='/'onClick={this.signout}>
     <Glyphicon glyph="glyphicon glyphicon-log-out" />
      </NavItem>
-     <NavItem eventKey={3} onClick={this.getbooking}>
+     <NavItem eventKey={3}  onClick={this.toggle,this.getbooking}>
      <Glyphicon glyph="glyphicon glyphicon-shopping-cart" />
+
      <p>  {this.state.cartBooking.length} Items in Cart</p>
+
       </NavItem>
 
     </Nav>
   </Navbar.Collapse>
 </Navbar>
+<div>
+{this.state.modal
+  ?(
+    <Container>
+          <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">
+          <ModalHeader toggle={() => this.toggle(4)}>Your Cart</ModalHeader>
+          <ModalBody>
+          <table>
+          <thead>
+          <tr >
+          <td>#</td>
+
+               <td>Brand</td>
+              <td>Start</td>
+              <td >Conact</td>
+              <td >Price</td>
+
+
+          </tr>
+          </thead>
+          <tbody>
+           {cartviewtable}
+          </tbody>
+          </table>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button color="secondary" onClick={() => this.toggle(4)}>Close</Button>
+            <Button color="primary">Booking Now</Button>
+          </ModalFooter>
+        </Modal>
+    </Container>)
+    :null
+  }
+  </div>
+
     </div>
 );
 }
+
 }
+
 class Headernonuser extends Component{
 
   render() {
@@ -145,8 +207,13 @@ class Headernonuser extends Component{
   </Navbar.Collapse>
 </Navbar>
     </div>
+
+
 );
 }
+
+
 }
+
 
 export default Header;

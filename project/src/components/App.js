@@ -3,7 +3,7 @@ import {
   Route,
 } from 'react-router-dom';
 import React, { Component } from 'react';
-
+import { ModalContainer } from 'react-router-modal';
 import HeaderPage from './Header';
 import BodyPage from './Body';
 import SignUpPage from './SignUp';
@@ -12,9 +12,12 @@ import Contactpage from './Contact';
 import Footerpage from './footer';
 import ForgetPasspage from './ForgetPass';
 import UserPage from './Userpage';
+
 import "font-awesome/css/font-awesome.min.css";
 import "mdbreact/dist/css/mdb.css";
 import firebase from 'firebase/app';
+import 'react-router-modal/css/react-router-modal.css';
+
 
 class App extends Component {
   constructor(props) {
@@ -43,7 +46,7 @@ class App extends Component {
     })
   }
   cartcheckout(){
-    
+
   }
   render() {
       return (
@@ -61,7 +64,9 @@ class App extends Component {
 
       <Footerpage />
 
-</div>
+      <ModalContainer />
+    </div>
+
 </Router>
 );
 }
