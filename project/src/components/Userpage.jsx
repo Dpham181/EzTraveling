@@ -14,7 +14,12 @@ class UserPage extends Component{
     this.state={
         uid:'',
         goldpackets:[],
+        goldpacketscar:[],
+        goldpacketshotel:[],
         silverpackets:[],
+        silverpacketscar:[],
+        silverpacketshotel:[],
+        choose:'',
         img:'',
         Booking:[],
       gold:false,
@@ -24,7 +29,7 @@ class UserPage extends Component{
     this.GoldPackets= this.GoldPackets.bind(this);
     this.SilverPackets= this.SilverPackets.bind(this);
     this.addToCart= this.addToCart.bind(this);
-
+    this.onChange = this.onChange.bind(this);
   }
   GoldPackets(){
     this.setState({gold:true});
@@ -39,11 +44,25 @@ class UserPage extends Component{
       this.setState({gold:false});
     }
   }
-  
+  onChange(e){
+    this.setState({choose: e.target.value});
+    console.log(this.state);
+
+  }
+
+
   componentDidMount() {
     var user = auth.currentUser;
     if(user){
       this.setState({uid:user.uid});
+
+
+  /*
+  __________________________*********************************__________________________
+                          list of all gold packets from firebase
+
+    */
+
      const goldref = realdb.ref().child('Gold/Fight');
      goldref.once("value", snap => {
          // Handle state
@@ -66,7 +85,58 @@ class UserPage extends Component{
          this.setState({goldpackets: listFightG})
      });
 
-     const silverref = realdb.ref().child('Silver/Fight');
+     const goldrefcar = realdb.ref().child('Gold/Car');
+     goldrefcar.once("value", snap => {
+         // Handle state
+         let listcarG = []
+         snap.forEach(child => {
+
+             listcarG.push(
+               {
+               name:child.val().name,
+               Stars:child.val().Stars,
+               TicketStatus:child.val().Status,
+               Price:child.val().Price,
+               contacts:child.val().contacts,
+
+               id: child.val().id
+
+             }
+             );
+         });
+         this.setState({goldpacketscar: listcarG})
+     });
+
+     const goldrefhotel = realdb.ref().child('Gold/Hotel');
+     goldrefhotel.once("value", snap => {
+         // Handle state
+         let listhotelG = []
+         snap.forEach(child => {
+
+             listhotelG.push(
+               {
+               name:child.val().name,
+               Stars:child.val().Stars,
+               TicketStatus:child.val().Status,
+               Price:child.val().Price,
+               contacts:child.val().contacts,
+
+               id: child.val().id
+
+             }
+             );
+         });
+         this.setState({goldpacketshotel: listhotelG})
+     });
+
+// end of gold packets
+
+/*
+__________________________*********************************__________________________
+                             list of all silver packets
+
+*/
+     const silverref = realdb.ref().child('Silver/Fight'); // flight tickets query
      silverref.once("value", snap => {
          // Handle state
 
@@ -95,8 +165,51 @@ class UserPage extends Component{
 
      });
 
-   }
+     const silverrefcar = realdb.ref().child('Silver/Car');
+     silverrefcar.once("value", snap => {
+         // Handle state
+         let listcarS = []
+         snap.forEach(child => {
 
+             listcarS.push(
+               {
+               name:child.val().name,
+               Stars:child.val().Stars,
+               TicketStatus:child.val().Status,
+               Price:child.val().Price,
+               contacts:child.val().contacts,
+
+               id: child.val().id
+
+             }
+             );
+         });
+         this.setState({silverpacketscar: listcarS})
+     });
+     const silverrefhotel= realdb.ref().child('Silver/Hotel');
+     silverrefhotel.once("value", snap => {
+         // Handle state
+         let listhotelS = []
+         snap.forEach(child => {
+
+             listhotelS.push(
+               {
+               name:child.val().name,
+               Stars:child.val().Stars,
+               TicketStatus:child.val().Status,
+               Price:child.val().Price,
+               contacts:child.val().contacts,
+
+               id: child.val().id
+
+             }
+             );
+         });
+         this.setState({silverpacketshotel: listhotelS})
+     });
+
+   }
+// end of silver packet
    else {
      console.log("not user");
      this.setState({redirect:true});
@@ -129,9 +242,11 @@ class UserPage extends Component{
                   }
 
   render() {
-    const tableS = this.state.silverpackets.map((item,i) => (
+// mapping object with array for render gold packet unique key need for each child
 
-   <tr>
+    const tableS = this.state.silverpackets.map((item,i=200) => (
+
+   <tr key={i}>
         <td key={i+1}>{item.id}</td>
 
        <td key={i+2}>{item.name}</td>
@@ -147,15 +262,67 @@ class UserPage extends Component{
             item.Stars,
             item.contacts,
             item.Price)
-          } floating gradient="purple"><Fa icon="plus" /></Button></td>
+          } floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
 
 
 
    </tr>
 
- ))
+ ));
+
+ const tableShotel = this.state.silverpacketshotel.map((item,i=2000) => (
+
+<tr key={i}>
+     <td key={i+1}>{item.id}</td>
+
+    <td key={i+2}>{item.name}</td>
+
+    <td key={i+3}>{item.Stars}</td>
+    <td key={i+4}>{item.TicketStatus}</td>
+    <td key={i+5}>{item.Price}</td>
+    <td key={i+6}>{item.contacts}</td>
+
+ <td><Button  onClick={this.addToCart.bind(this,
+         item.id,
+         item.name,
+         item.Stars,
+         item.contacts,
+         item.Price)
+       } floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
+
+
+
+</tr>
+
+));
+const tableScar = this.state.silverpacketscar.map((item,i) => (
+
+<tr key={i}>
+    <td key={i+1}>{item.id}</td>
+
+   <td key={i+2}>{item.name}</td>
+
+   <td key={i+3}>{item.Stars}</td>
+   <td key={i+4}>{item.TicketStatus}</td>
+   <td key={i+5}>{item.Price}</td>
+   <td key={i+6}>{item.contacts}</td>
+
+<td><Button  onClick={this.addToCart.bind(this,
+        item.id,
+        item.name,
+        item.Stars,
+        item.contacts,
+        item.Price)
+      } floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
+
+
+
+</tr>
+
+));
+ // mapping object with array for render gold packet unique key need for each child
    const tableG = this.state.goldpackets.map((item,g=100) => (
-  <tr>
+  <tr key={g}>
        <td key={g +7}>{item.id}</td>
 
       <td key={g +8}>{item.name}</td>
@@ -164,11 +331,38 @@ class UserPage extends Component{
       <td key={g+10}>{item.TicketStatus}</td>
       <td key={g+11}>{item.Price}</td>
       <td key={g+12}>{item.contacts}</td>
-      <td><Button  floating gradient="purple"><Fa icon="plus" /></Button></td>
+      <td><Button  floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
 
   </tr>
-))
+));
+const tableGcar = this.state.goldpacketscar.map((item,g=1000) => (
+<tr key={g}>
+    <td key={g +7}>{item.id}</td>
 
+   <td key={g +8}>{item.name}</td>
+
+   <td key={g +9}>{item.Stars}</td>
+   <td key={g+10}>{item.TicketStatus}</td>
+   <td key={g+11}>{item.Price}</td>
+   <td key={g+12}>{item.contacts}</td>
+   <td><Button  floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
+
+</tr>
+));
+const tableGhotel = this.state.goldpacketshotel.map((item,g=10000) => (
+<tr key={g}>
+    <td key={g +7}>{item.id}</td>
+
+   <td key={g +8}>{item.name}</td>
+
+   <td key={g +9}>{item.Stars}</td>
+   <td key={g+10}>{item.TicketStatus}</td>
+   <td key={g+11}>{item.Price}</td>
+   <td key={g+12}>{item.contacts}</td>
+   <td><Button  floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
+
+</tr>
+));
 
     console.log(this.state.silverpackets);
     if(this.state.redirect){
@@ -214,13 +408,36 @@ class UserPage extends Component{
 
 
       </div>
+
+
+
+
+
           <div className="flex-user">
+
           {
-            this.state.gold || this.state.silver
+            this.state.gold|| this.state.silver
+          ?(
+          <div className="flex-selected">
+      <select value={this.state.choose} onChange={this.onChange} >
+        <option defaultValue>Empty</option>
+        <option value="Flight">Fight Tickets</option>
+        <option value="Car">Car Rental</option>
+        <option value="Hotel">Hotel Booking</option>
+
+      </select>
+
+  </div>
+):null
+}
+
+
+          {
+            this.state.choose === "Flight"
         ?(
         <div>
         <Table>
-              <TableHead>
+              <TableHead  color="primary-color" >
                 <tr>
                   <th>#</th>
                   <th>Brand</th>
@@ -250,6 +467,85 @@ class UserPage extends Component{
 
         )
         :null
+}
+
+
+
+
+
+{
+  this.state.choose === "Car"
+?(
+<div>
+<Table>
+    <TableHead  color="primary-color" >
+      <tr>
+        <th>#</th>
+        <th>Brand</th>
+        <th>Stars</th>
+        <th>TicketStatus</th>
+        <th>Price</th>
+        <th>Contacts</th>
+        <th>Action</th>
+
+      </tr>
+    </TableHead>
+  {
+    this.state.silver
+    ?(<TableBody>{tableScar}</TableBody>
+)
+    :null
+  }
+  {
+    this.state.gold
+    ?(<TableBody>{tableGcar}</TableBody>
+)
+    :null
+  }
+  </Table>
+</div>
+
+
+)
+:null
+}
+
+
+{
+  this.state.choose === "Hotel"
+?(
+<div>
+<Table>
+    <TableHead  color="primary-color" >
+      <tr>
+        <th>#</th>
+        <th>Brand</th>
+        <th>Stars</th>
+        <th>TicketStatus</th>
+        <th>Price</th>
+        <th>Contacts</th>
+        <th>Action</th>
+
+      </tr>
+    </TableHead>
+  {
+    this.state.silver
+    ?(<TableBody>{tableShotel}</TableBody>
+)
+    :null
+  }
+  {
+    this.state.gold
+    ?(<TableBody>{tableGhotel}</TableBody>
+)
+    :null
+  }
+  </Table>
+</div>
+
+
+)
+:null
 }
         </div>
           </div>
