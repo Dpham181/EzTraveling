@@ -39,7 +39,7 @@ class UserPage extends Component{
       this.setState({gold:false});
     }
   }
-
+  
   componentDidMount() {
     var user = auth.currentUser;
     if(user){

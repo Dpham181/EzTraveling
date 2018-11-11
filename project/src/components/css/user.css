@@ -15,7 +15,13 @@
   margin-bottom: 100px;
   color: #fff;
 }
-
+.triangle-up {
+	width: 0;
+	height: 0;
+	border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
+	border-bottom: 50px solid #555;
+}
 table th,td,tr{
   border: 2px solid #fff;
   width: 20%;

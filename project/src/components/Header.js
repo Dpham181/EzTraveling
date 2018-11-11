@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Navbar , NavItem, Nav, Glyphicon} from 'react-bootstrap';
 import { auth, realdb} from './firebase/firebase';
-import { Modal, ModalRoute } from 'react-router-modal';
+import { Modal } from 'react-router-modal';
 import { Container, Button, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
 
 import './css/header.css';
@@ -33,7 +33,6 @@ class Headeruser extends Component{
 
 
     }
-    this.getbooking= this.getbooking.bind(this);
 
   }
 
@@ -43,37 +42,7 @@ class Headeruser extends Component{
       modal: !this.state.modal
     });
   }
-getbooking(){
-  var uid = this.state.userid;
-  this.setState({ modal: true });
 
-  console.log(uid);
-  const tempref = realdb.ref().child(`tempcartcheckout/${uid}`);
-  tempref.once("value", snap => {
-      // Handle state
-      let cartlist = []
-      snap.forEach(child => {
-
-          cartlist.push(
-            {
-            name:child.val().n,
-            Stars:child.val().s,
-            TicketStatus:child.val().c,
-            Price:child.val().p
-
-
-          }
-
-          );
-
-
-      });
-      this.setState({cartBooking: cartlist})
-      console.log( cartlist);
-      console.log(this.state.cartBooking);
-
-  });
-}
 
   componentDidMount(){
     var user = auth.currentUser;
@@ -81,6 +50,31 @@ getbooking(){
     if (user != null) {
     userinfo.push(user.email);
     this.setState({userid:user.uid});
+    const tempref = realdb.ref().child(`tempcartcheckout/${user.uid}`);
+    tempref.once("value", snap => {
+        // Handle state
+        let cartlist = []
+        snap.forEach(child => {
+
+            cartlist.push(
+              {
+              name:child.val().n,
+              Stars:child.val().s,
+              TicketStatus:child.val().c,
+              Price:child.val().p
+
+
+            }
+
+            );
+
+
+        });
+        this.setState({cartBooking: cartlist})
+        console.log( cartlist);
+        console.log(this.state.cartBooking);
+
+    });
   }
   this.setState({useremail:userinfo});
 
@@ -127,8 +121,8 @@ getbooking(){
     <NavItem eventKey={2} href='/'onClick={this.signout}>
     <Glyphicon glyph="glyphicon glyphicon-log-out" />
      </NavItem>
-     <NavItem eventKey={3}  onClick={this.toggle,this.getbooking}>
-     <Glyphicon glyph="glyphicon glyphicon-shopping-cart" />
+     <NavItem eventKey={3}  onClick={this.toggle}>
+     <Glyphicon  className ="shake" glyph="glyphicon glyphicon-shopping-cart" />
 
      <p>  {this.state.cartBooking.length} Items in Cart</p>
 

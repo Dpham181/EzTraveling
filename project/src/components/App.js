@@ -24,9 +24,7 @@ class App extends Component {
     super(props);
     this.state ={
       userlogging:false,
-      cartBooking:[],
     };
-    this.cartcheckout= this.cartcheckout.bind(this);
   }
   componentDidMount() {
   firebase.auth().onAuthStateChanged((user) => {
@@ -45,9 +43,7 @@ class App extends Component {
       }
     })
   }
-  cartcheckout(){
 
-  }
   render() {
       return (
    <Router >
