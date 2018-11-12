@@ -27,6 +27,9 @@ table th,td,tr{
   width: 20%;
 
 }
+select{
+  color:#333;
+}
 li{
   color: #333;
   font-size: 24px;

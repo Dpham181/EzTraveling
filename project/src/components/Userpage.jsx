@@ -20,6 +20,7 @@ class UserPage extends Component{
         silverpacketscar:[],
         silverpacketshotel:[],
         choose:'',
+        quanity:'1',
         img:'',
         Booking:[],
         redirect:false,
@@ -30,6 +31,8 @@ class UserPage extends Component{
     this.SilverPackets= this.SilverPackets.bind(this);
     this.addToCart= this.addToCart.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onChangequanity = this.onChangequanity.bind(this);
+
   }
   GoldPackets(){
     this.setState({gold:true});
@@ -46,10 +49,16 @@ class UserPage extends Component{
   }
   onChange(e){
     this.setState({choose: e.target.value});
+
     console.log(this.state);
 
   }
+  onChangequanity(e){
+    this.setState({quanity: e.target.value});
 
+    console.log(this.state);
+
+  }
 
   componentDidMount() {
     var user = auth.currentUser;
@@ -216,12 +225,13 @@ __________________________*********************************_____________________
    }
                 }
 
-  addToCart(i, n, s, c, p ) {
+  addToCart(i,q, n, s, c, p ) {
                   console.log("add to card working");
                   this.setState(
                     {
                       Booking: {
                         name: n,
+                        quanity:q,
                         Stars: s,
                         Contact: c,
                         Pirce: p
@@ -232,6 +242,7 @@ __________________________*********************************_____________________
                     var inum = Math.floor((Math.random() * 100) + 1);
                   realdb.ref(`tempcartcheckout/${uid}/${inum}`).set({
                     inum,
+                    q,
                     n,
                     s,
                     c,
@@ -255,9 +266,24 @@ __________________________*********************************_____________________
        <td key={i+4}>{item.TicketStatus}</td>
        <td key={i+5}>{item.Price}</td>
        <td key={i+6}>{item.contacts}</td>
+      <td key={i+7}>
+          <select value={this.state.quanity} onChange={this.onChangequanity} >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="9">10</option>
 
+            </select>
+          </td>
     <td><Button  onClick={this.addToCart.bind(this,
             item.id,
+            this.state.quanity,
             item.name,
             item.Stars,
             item.contacts,
@@ -281,9 +307,24 @@ __________________________*********************************_____________________
     <td key={i+4}>{item.TicketStatus}</td>
     <td key={i+5}>{item.Price}</td>
     <td key={i+6}>{item.contacts}</td>
+    <td key={i+7}>
+        <select value={this.state.quanity} onChange={this.onChangequanity} >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="9">10</option>
 
+          </select>
+        </td>
  <td><Button  onClick={this.addToCart.bind(this,
          item.id,
+         this.state.quanity,
          item.name,
          item.Stars,
          item.contacts,
@@ -306,9 +347,24 @@ const tableScar = this.state.silverpacketscar.map((item,i) => (
    <td key={i+4}>{item.TicketStatus}</td>
    <td key={i+5}>{item.Price}</td>
    <td key={i+6}>{item.contacts}</td>
+   <td key={i+7}>
+       <select value={this.state.quanity} onChange={this.onChangequanity} >
+           <option value="1">1</option>
+           <option value="2">2</option>
+           <option value="3">3</option>
+           <option value="4">4</option>
+           <option value="5">5</option>
+           <option value="6">6</option>
+           <option value="7">7</option>
+           <option value="8">8</option>
+           <option value="9">9</option>
+           <option value="9">10</option>
 
+         </select>
+       </td>
 <td><Button  onClick={this.addToCart.bind(this,
         item.id,
+        this.state.quanity,
         item.name,
         item.Stars,
         item.contacts,
@@ -331,8 +387,24 @@ const tableScar = this.state.silverpacketscar.map((item,i) => (
       <td key={g+10}>{item.TicketStatus}</td>
       <td key={g+11}>{item.Price}</td>
       <td key={g+12}>{item.contacts}</td>
+      <td key={g+13}>
+          <select value={this.state.quanity} onChange={this.onChangequanity} >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="9">10</option>
+
+            </select>
+          </td>
       <td><Button  onClick={this.addToCart.bind(this,
               item.id,
+              this.state.quanity,
               item.name,
               item.Stars,
               item.contacts,
@@ -352,8 +424,24 @@ const tableGcar = this.state.goldpacketscar.map((item,g=1000) => (
    <td key={g+10}>{item.TicketStatus}</td>
    <td key={g+11}>{item.Price}</td>
    <td key={g+12}>{item.contacts}</td>
+   <td key={g+13}>
+       <select value={this.state.quanity} onChange={this.onChangequanity} >
+           <option value="1">1</option>
+           <option value="2">2</option>
+           <option value="3">3</option>
+           <option value="4">4</option>
+           <option value="5">5</option>
+           <option value="6">6</option>
+           <option value="7">7</option>
+           <option value="8">8</option>
+           <option value="9">9</option>
+           <option value="9">10</option>
+
+         </select>
+       </td>
    <td><Button  onClick={this.addToCart.bind(this,
            item.id,
+           this.state.quanity,
            item.name,
            item.Stars,
            item.contacts,
@@ -373,8 +461,24 @@ const tableGhotel = this.state.goldpacketshotel.map((item,g=10000) => (
    <td key={g+10}>{item.TicketStatus}</td>
    <td key={g+11}>{item.Price}</td>
    <td key={g+12}>{item.contacts}</td>
+   <td key={g+13}>
+       <select value={this.state.quanity} onChange={this.onChangequanity} >
+           <option value="1">1</option>
+           <option value="2">2</option>
+           <option value="3">3</option>
+           <option value="4">4</option>
+           <option value="5">5</option>
+           <option value="6">6</option>
+           <option value="7">7</option>
+           <option value="8">8</option>
+           <option value="9">9</option>
+           <option value="9">10</option>
+
+         </select>
+       </td>
    <td><Button  onClick={this.addToCart.bind(this,
            item.id,
+           this.state.quanity,
            item.name,
            item.Stars,
            item.contacts,
@@ -460,6 +564,8 @@ return (
                   <th>TicketStatus</th>
                   <th>Price</th>
                   <th>Contacts</th>
+                  <th>Quanity</th>
+
                   <th>Action</th>
 
                 </tr>

@@ -28,7 +28,7 @@ class Headeruser extends Component{
     this.state={
       useremail:[],
       cartBooking: [],
-      carttotal:[],
+      carttotal:'',
       userid:'',
       modal: false
 
@@ -52,34 +52,44 @@ class Headeruser extends Component{
 
   getitems(){
     var userid = this.state.userid;
+    var totallist = 0;
+
     const tempref = realdb.ref().child(`tempcartcheckout/${userid}`);
     tempref.once("value", snap => {
         // Handle state
-        var totallist = [] ;
         let cartlist = []
-        snap.forEach(child => {
+        var  totallist = 0;
 
+        snap.forEach(child => {
+          totallist += (parseInt(child.val().p) * parseInt(child.val().q));
             cartlist.push(
               {
               id: child.val().inum,
+              quanity: child.val().q,
+
               name:child.val().n,
               Stars:child.val().s,
               TicketStatus:child.val().c,
               Price:child.val().p
-
 
             }
 
             );
 
         });
+
+        console.log(totallist);
+        this.setState({carttotal:totallist})
         this.setState({cartBooking: cartlist})
-        console.log( cartlist);
-        this.setState({carttotal: totallist})
+
+
+
 
         console.log(this.state.cartBooking);
 
     });
+    console.log(this.state.carttotal);
+
   }
 
   getitemwithtoggle(){
@@ -136,18 +146,16 @@ class Headeruser extends Component{
        <td key={i+2}>{item.name}</td>
       <td key={i+3}>{item.Stars}</td>
       <td key={i+4}>{item.TicketStatus}</td>
-      <td key={i+5}>{item.Price}</td>
+      <td key={i+5}>{item.quanity}</td>
+
+      <td key={i+6}>{item.Price * item.quanity}  $</td>
 
       <td><Button  onClick={this.removeoneitem.bind(this,
               item.id)
 
-            } ><i class="fa fa-close" background-color ="red"></i></Button></td>
+            } ><i className="fa fa-close" background-color ="red"></i></Button></td>
 
   </tr>));
-
-
-
-
 
 
       return (
@@ -191,6 +199,8 @@ class Headeruser extends Component{
                <td>Brand</td>
               <td>Start</td>
               <td >Contact</td>
+              <td >Quanity</td>
+
               <td >Price</td>
 
 
@@ -202,12 +212,14 @@ class Headeruser extends Component{
           <tfoot>
           <tr>
 
-          <td>Your total is </td>
+          <td> </td>
 
                <td></td>
               <td></td>
               <td ></td>
-              <td >Price</td>
+              <td >Your total is</td>
+
+              <td >{this.state.carttotal}$</td>
           </tr>
           </tfoot>
 
