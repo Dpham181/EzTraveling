@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Navbar , NavItem, Nav, Glyphicon} from 'react-bootstrap';
 import { auth, realdb} from './firebase/firebase';
 import { Modal } from 'react-router-modal';
-import { Container, Button, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
+import { Fa, Container, Button, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
 
 import './css/header.css';
 
@@ -28,36 +28,40 @@ class Headeruser extends Component{
     this.state={
       useremail:[],
       cartBooking: [],
+      carttotal:[],
       userid:'',
       modal: false
 
 
     }
-
+    this.getitems = this.getitems.bind(this);
+    this.removeallitems = this.removeallitems.bind(this);
+    this.toggle = this.toggle.bind(this);
+    this.getitemwithtoggle = this.getitemwithtoggle.bind(this);
+    this.removealltoggle = this.removealltoggle.bind(this);
+    this.removeoneitem = this.removeoneitem.bind(this);
   }
 
 
-  toggle = () => {
+  toggle() {
     this.setState({
       modal: !this.state.modal
     });
   }
 
 
-  componentDidMount(){
-    var user = auth.currentUser;
-    var userinfo=[];
-    if (user != null) {
-    userinfo.push(user.email);
-    this.setState({userid:user.uid});
-    const tempref = realdb.ref().child(`tempcartcheckout/${user.uid}`);
+  getitems(){
+    var userid = this.state.userid;
+    const tempref = realdb.ref().child(`tempcartcheckout/${userid}`);
     tempref.once("value", snap => {
         // Handle state
+        var totallist = [] ;
         let cartlist = []
         snap.forEach(child => {
 
             cartlist.push(
               {
+              id: child.val().inum,
               name:child.val().n,
               Stars:child.val().s,
               TicketStatus:child.val().c,
@@ -68,13 +72,45 @@ class Headeruser extends Component{
 
             );
 
-
         });
         this.setState({cartBooking: cartlist})
         console.log( cartlist);
+        this.setState({carttotal: totallist})
+
         console.log(this.state.cartBooking);
 
     });
+  }
+
+  getitemwithtoggle(){
+    this.toggle();
+    this.getitems();
+  }
+  removeallitems(){
+    var removeuid = this.state.userid;
+
+    const removeref = realdb.ref().child(`tempcartcheckout`);
+    removeref.child(`${removeuid}`).remove();
+  }
+  removealltoggle(){
+    this.toggle();
+    this.removeallitems();
+  }
+  removeoneitem(i){
+    var removeuid = this.state.userid;
+
+    const removerefone = realdb.ref().child(`tempcartcheckout`);
+    const removeone = removerefone.child(`${removeuid}`);
+    removeone.child(`${i}`).remove();
+  }
+
+  componentDidMount(){
+    var user = auth.currentUser;
+    var userinfo=[];
+    if (user != null) {
+    userinfo.push(user.email);
+    this.setState({userid:user.uid});
+
   }
   this.setState({useremail:userinfo});
 
@@ -102,8 +138,17 @@ class Headeruser extends Component{
       <td key={i+4}>{item.TicketStatus}</td>
       <td key={i+5}>{item.Price}</td>
 
+      <td><Button  onClick={this.removeoneitem.bind(this,
+              item.id)
+
+            } ><i class="fa fa-close" background-color ="red"></i></Button></td>
 
   </tr>));
+
+
+
+
+
 
       return (
 
@@ -121,8 +166,8 @@ class Headeruser extends Component{
     <NavItem eventKey={2} href='/'onClick={this.signout}>
     <Glyphicon glyph="glyphicon glyphicon-log-out" />
      </NavItem>
-     <NavItem eventKey={3}  onClick={this.toggle}>
-     <Glyphicon  className ="shake" glyph="glyphicon glyphicon-shopping-cart" />
+     <NavItem eventKey={3}  onClick={this.getitemwithtoggle}>
+     <Glyphicon   className ="shake" glyph="glyphicon glyphicon-shopping-cart" />
 
      <p>  {this.state.cartBooking.length} Items in Cart</p>
 
@@ -145,7 +190,7 @@ class Headeruser extends Component{
 
                <td>Brand</td>
               <td>Start</td>
-              <td >Conact</td>
+              <td >Contact</td>
               <td >Price</td>
 
 
@@ -154,11 +199,23 @@ class Headeruser extends Component{
           <tbody>
            {cartviewtable}
           </tbody>
+          <tfoot>
+          <tr>
+
+          <td>Your total is </td>
+
+               <td></td>
+              <td></td>
+              <td ></td>
+              <td >Price</td>
+          </tr>
+          </tfoot>
+
           </table>
           </ModalBody>
 
           <ModalFooter>
-            <Button color="secondary" onClick={() => this.toggle(4)}>Close</Button>
+            <Button color="secondary" onClick={this.removealltoggle}>Cancel All</Button>
             <Button color="primary">Booking Now</Button>
           </ModalFooter>
         </Modal>

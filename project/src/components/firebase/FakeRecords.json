@@ -9,7 +9,7 @@
       "name": "Delta Air Lines",
       "Stars": "4",
       "TicketStatus": "Business",
-      "Price": "4100$",
+      "Price": "4100",
       "contacts": "7146751702"
     },
     "id2":
@@ -18,7 +18,7 @@
       "name": "British Airways",
       "Stars": "5",
       "TicketStatus": "Business",
-      "Price": "4200$",
+      "Price": "4200",
 
       "contacts": "7146751702"
     },
@@ -28,7 +28,7 @@
       "name": "American Airlines",
       "Stars": "4",
       "TicketStatus": "Business",
-      "Price": "4300$",
+      "Price": "4300",
 
       "contacts": "7146751702"
     },
@@ -38,7 +38,7 @@
       "name": " United Airlines",
       "Stars": "5",
       "TicketStatus": "Business",
-      "Price": "4400$",
+      "Price": "4400",
 
       "contacts": "7146751702"
     }
@@ -52,7 +52,7 @@
         "id":"1",
         "name": "Gold_hotel 1",
         "Stars": "4",
-        "Price": "300$/per day",
+        "Price": "300",
 
         "contacts": "7146751702"
       },
@@ -61,7 +61,7 @@
         "id":"2",
         "name": "Gold_hotel 2",
         "Stars": "5",
-        "Price": "400$/per day",
+        "Price": "400",
 
         "contacts": "7146751702"
       },
@@ -70,7 +70,7 @@
         "id":"3",
         "name": "Gold_hotel 3",
         "Stars": "4",
-        "Price": "500$/per day",
+        "Price": "500",
         "contacts": "7146751702"
       },
       "id4":
@@ -78,7 +78,7 @@
         "id":"4",
         "name": "Gold_hotel 4",
         "Stars": "5",
-        "Price": "600$/per day",
+        "Price": "600",
         "contacts": "7146751702"
       }
 
@@ -94,7 +94,7 @@
         "name": "ACE Rent a Car",
         "Stars": "4",
         "Status": "Premium-ferrari",
-        "Price": "500$/per day",
+        "Price": "500",
 
         "contacts": "7146751702"
       },
@@ -104,7 +104,7 @@
         "name": "Avis Southern Africa",
         "Stars": "5",
         "Status": "Premium-Tesla ",
-        "Price": "600$/per day",
+        "Price": "600",
 
         "contacts": "7146751702"
       },
@@ -113,7 +113,7 @@
         "id":"3",
         "name": "CanaDream",
         "Stars": "4",
-        "Price": "700$/per day",
+        "Price": "700",
 
         "Status": "Premium-lamborghini",
 
@@ -124,7 +124,7 @@
         "id":"4",
         "name": "Enterprice",
         "Stars": "5",
-        "Price": "500$/per day",
+        "Price": "500",
 
         "Status": "Premium-BMW",
 
@@ -142,7 +142,7 @@
     "name": "Delta Air Lines",
     "Stars": "4",
     "TicketStatus": "Economy",
-    "Price": "800$",
+    "Price": "800",
 
     "contacts": "7146751702"
   },
@@ -152,7 +152,7 @@
     "name": "British Airways",
     "Stars": "5",
     "TicketStatus": "Economy",
-    "Price": "900$",
+    "Price": "900",
 
     "contacts": "7146751702"
   },
@@ -161,7 +161,7 @@
     "id":"3",
     "name": "American Airlines",
     "Stars": "4",
-    "Price": "1200$",
+    "Price": "1200",
 
     "TicketStatus": "Economy",
 
@@ -172,7 +172,7 @@
     "id":"4",
     "name": " United Airlines",
     "Stars": "5",
-    "Price": "1000$",
+    "Price": "1000",
 
     "TicketStatus": "Economy",
     "contacts": "7146751702"
@@ -187,7 +187,7 @@
       "id":"1",
       "name": "Gold_hotel 1",
       "Stars": "1",
-      "Price": "200$/ for 3 days",
+      "Price": "200",
 
       "contacts": "7146751702"
     },
@@ -196,7 +196,7 @@
       "id":"2",
       "name": "Gold_hotel 2",
       "Stars": "2",
-      "Price": "400$/ for 4 days",
+      "Price": "400",
 
       "contacts": "7146751702"
     },
@@ -205,7 +205,7 @@
       "id":"3",
       "name" : "Gold_hotel 3",
       "Stars": "3",
-      "Price": "300$/ for 3 days",
+      "Price": "300",
 
       "contacts": "7146751702"
     },
@@ -214,7 +214,7 @@
       "id":"4",
       "name": "Gold_hotel 4",
       "Stars": "2",
-      "Price": "500$/ for 1 weeks",
+      "Price": "500",
 
       "contacts": "7146751702"
     }
@@ -230,7 +230,7 @@
       "id":"1",
       "name": "ACE Rent a Car",
       "Stars": "4",
-      "Price": "200$/ for 3 days",
+      "Price": "200",
 
       "Status": "Premium-honda",
       "contacts": "7146751702"
@@ -240,7 +240,7 @@
       "id":"2",
       "name": "Avis Southern Africa",
       "Stars": "5",
-      "Price": "200$/ for 3 days",
+      "Price": "200",
 
       "Status": "Premium-Camry ",
       "contacts": "7146751702"
@@ -250,7 +250,7 @@
       "id":"3",
       "name": "CanaDream",
       "Stars": "4",
-      "Price": "200$/ for 3 days",
+      "Price": "200",
 
       "Status": "Premium-Dodge",
 
@@ -261,7 +261,7 @@
       "id":"4",
       "name": "Enterprice",
       "Stars": "5",
-      "Price": "200$/ for 3 days",
+      "Price": "200",
 
       "Status": "Premium-Camry",
 

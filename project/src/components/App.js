@@ -56,7 +56,7 @@ class App extends Component {
       <Route path="/Register"  component={SignUpPage}/>
       <Route path="/Logining"  component={SignInPage}/>
       <Route path="/PassForget"  component={ForgetPasspage}/>
-      <Route path="/User"  component={UserPage}/>
+      <Route path="/User" userlogging={this.state.userlogging} component={UserPage}/>
 
       <Footerpage />
 

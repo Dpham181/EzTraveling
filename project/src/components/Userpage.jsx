@@ -22,9 +22,9 @@ class UserPage extends Component{
         choose:'',
         img:'',
         Booking:[],
+        redirect:false,
       gold:false,
       silver:false,
-      redirect:false
     };
     this.GoldPackets= this.GoldPackets.bind(this);
     this.SilverPackets= this.SilverPackets.bind(this);
@@ -229,8 +229,9 @@ __________________________*********************************_____________________
                     }
                   );
                     var uid = this.state.uid;
-                  realdb.ref(`tempcartcheckout/${uid}/${i}`).set({
-                    uid,
+                    var inum = Math.floor((Math.random() * 100) + 1);
+                  realdb.ref(`tempcartcheckout/${uid}/${inum}`).set({
+                    inum,
                     n,
                     s,
                     c,
@@ -238,7 +239,6 @@ __________________________*********************************_____________________
                 });
                 i++;
                   console.log(this.state.Booking);
-
                   }
 
   render() {
@@ -331,7 +331,14 @@ const tableScar = this.state.silverpacketscar.map((item,i) => (
       <td key={g+10}>{item.TicketStatus}</td>
       <td key={g+11}>{item.Price}</td>
       <td key={g+12}>{item.contacts}</td>
-      <td><Button  floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
+      <td><Button  onClick={this.addToCart.bind(this,
+              item.id,
+              item.name,
+              item.Stars,
+              item.contacts,
+              item.Price)
+            } floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
+
 
   </tr>
 ));
@@ -345,7 +352,14 @@ const tableGcar = this.state.goldpacketscar.map((item,g=1000) => (
    <td key={g+10}>{item.TicketStatus}</td>
    <td key={g+11}>{item.Price}</td>
    <td key={g+12}>{item.contacts}</td>
-   <td><Button  floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
+   <td><Button  onClick={this.addToCart.bind(this,
+           item.id,
+           item.name,
+           item.Stars,
+           item.contacts,
+           item.Price)
+         } floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
+
 
 </tr>
 ));
@@ -359,17 +373,21 @@ const tableGhotel = this.state.goldpacketshotel.map((item,g=10000) => (
    <td key={g+10}>{item.TicketStatus}</td>
    <td key={g+11}>{item.Price}</td>
    <td key={g+12}>{item.contacts}</td>
-   <td><Button  floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
+   <td><Button  onClick={this.addToCart.bind(this,
+           item.id,
+           item.name,
+           item.Stars,
+           item.contacts,
+           item.Price)
+         } floating gradient="blue"><Fa icon="shopping-cart" /></Button></td>
+
 
 </tr>
 ));
-
-    console.log(this.state.silverpackets);
-    if(this.state.redirect){
+if(this.state.redirect){
       return (<Redirect to={'/Logining'}/>);
     }
-
-      return (
+return (
 
         <div>
         <div className="user-page">
@@ -404,10 +422,7 @@ const tableGhotel = this.state.goldpacketshotel.map((item,g=10000) => (
         </div>
         </div>
           </div>
-
-
-
-      </div>
+            </div>
 
 
 
