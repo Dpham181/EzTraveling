@@ -112,6 +112,7 @@ class Headeruser extends Component{
     const removerefone = realdb.ref().child(`tempcartcheckout`);
     const removeone = removerefone.child(`${removeuid}`);
     removeone.child(`${i}`).remove();
+    this.setState({modal:false});
   }
 
   componentDidMount(){
@@ -148,12 +149,13 @@ class Headeruser extends Component{
       <td key={i+4}>{item.TicketStatus}</td>
       <td key={i+5}>{item.quanity}</td>
 
-      <td key={i+6}>{item.Price * item.quanity}  $</td>
+      <td key={i+6}>{item.Price * item.quanity}_$</td>
 
-      <td><Button  onClick={this.removeoneitem.bind(this,
+      <td key={i+7}><Button  size="sm" color="danger"  onClick={this.removeoneitem.bind(this,
               item.id)
 
-            } ><i className="fa fa-close" background-color ="red"></i></Button></td>
+            } ><i className="fa fa-close" ></i></Button></td>
+
 
   </tr>));
 
@@ -188,10 +190,10 @@ class Headeruser extends Component{
 {this.state.modal
   ?(
     <Container>
-          <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">
+          <Modal isOpen={this.state.modal} toggle={this.toggle} size="fluid">
           <ModalHeader toggle={() => this.toggle(4)}>Your Cart</ModalHeader>
           <ModalBody>
-          <table>
+          <table className="table table-striped">
           <thead>
           <tr >
           <td>#</td>

@@ -281,7 +281,7 @@ __________________________*********************************_____________________
 
             </select>
           </td>
-    <td><Button  onClick={this.addToCart.bind(this,
+    <td><Button  className ="b" onClick={this.addToCart.bind(this,
             item.id,
             this.state.quanity,
             item.name,
@@ -322,7 +322,7 @@ __________________________*********************************_____________________
 
           </select>
         </td>
- <td><Button  onClick={this.addToCart.bind(this,
+ <td><Button   className ="b" onClick={this.addToCart.bind(this,
          item.id,
          this.state.quanity,
          item.name,
@@ -362,7 +362,7 @@ const tableScar = this.state.silverpacketscar.map((item,i) => (
 
          </select>
        </td>
-<td><Button  onClick={this.addToCart.bind(this,
+<td><Button  className ="b" onClick={this.addToCart.bind(this,
         item.id,
         this.state.quanity,
         item.name,
@@ -402,7 +402,7 @@ const tableScar = this.state.silverpacketscar.map((item,i) => (
 
             </select>
           </td>
-      <td><Button  onClick={this.addToCart.bind(this,
+      <td><Button  className ="b"  onClick={this.addToCart.bind(this,
               item.id,
               this.state.quanity,
               item.name,
@@ -439,7 +439,7 @@ const tableGcar = this.state.goldpacketscar.map((item,g=1000) => (
 
          </select>
        </td>
-   <td><Button  onClick={this.addToCart.bind(this,
+   <td><Button   className ="b" onClick={this.addToCart.bind(this,
            item.id,
            this.state.quanity,
            item.name,
@@ -476,7 +476,7 @@ const tableGhotel = this.state.goldpacketshotel.map((item,g=10000) => (
 
          </select>
        </td>
-   <td><Button  onClick={this.addToCart.bind(this,
+   <td><Button   className ="b" onClick={this.addToCart.bind(this,
            item.id,
            this.state.quanity,
            item.name,
@@ -538,6 +538,8 @@ return (
             this.state.gold|| this.state.silver
           ?(
           <div className="flex-selected">
+          <p> Please choose category </p>
+          <p>
       <select value={this.state.choose} onChange={this.onChange} >
         <option defaultValue>Empty</option>
         <option value="Flight">Fight Tickets</option>
@@ -545,7 +547,7 @@ return (
         <option value="Hotel">Hotel Booking</option>
 
       </select>
-
+        </p>
   </div>
 ):null
 }
@@ -607,6 +609,8 @@ return (
         <th>TicketStatus</th>
         <th>Price</th>
         <th>Contacts</th>
+        <th>Quanity</th>
+
         <th>Action</th>
 
       </tr>
@@ -645,6 +649,8 @@ return (
         <th>TicketStatus</th>
         <th>Price</th>
         <th>Contacts</th>
+        <th>Quanity</th>
+
         <th>Action</th>
 
       </tr>
