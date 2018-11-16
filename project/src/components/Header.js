@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Navbar , NavItem, Nav, Glyphicon} from 'react-bootstrap';
 import { auth, realdb} from './firebase/firebase';
 import { Modal } from 'react-router-modal';
-import { Fa, Container, Button, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
+import { Container, Button, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
 
 import './css/header.css';
 
@@ -28,7 +28,6 @@ class Headeruser extends Component{
     this.state={
       useremail:[],
       cartBooking: [],
-      carttotal:'',
       userid:'',
       modal: false
 
@@ -52,7 +51,6 @@ class Headeruser extends Component{
 
   getitems(){
     var userid = this.state.userid;
-    var totallist = 0;
 
     const tempref = realdb.ref().child(`tempcartcheckout/${userid}`);
     tempref.once("value", snap => {
