@@ -265,6 +265,8 @@ __________________________*********************************_____________________
        <td key={i+3}>{item.Stars}</td>
        <td key={i+4}>{item.TicketStatus}</td>
        <td key={i+5}>{item.Price}</td>
+       <td key={i+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
+
        <td key={i+6}>{item.contacts}</td>
       <td key={i+7}>
           <select value={this.state.quanity} onChange={this.onChangequanity} >
@@ -304,8 +306,9 @@ __________________________*********************************_____________________
     <td key={i+2}>{item.name}</td>
 
     <td key={i+3}>{item.Stars}</td>
-    <td key={i+4}>{item.TicketStatus}</td>
     <td key={i+5}>{item.Price}</td>
+    <td key={i+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
+
     <td key={i+6}>{item.contacts}</td>
     <td key={i+7}>
         <select value={this.state.quanity} onChange={this.onChangequanity} >
@@ -346,6 +349,8 @@ const tableScar = this.state.silverpacketscar.map((item,i) => (
    <td key={i+3}>{item.Stars}</td>
    <td key={i+4}>{item.TicketStatus}</td>
    <td key={i+5}>{item.Price}</td>
+   <td key={i+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
+
    <td key={i+6}>{item.contacts}</td>
    <td key={i+7}>
        <select value={this.state.quanity} onChange={this.onChangequanity} >
@@ -386,6 +391,8 @@ const tableScar = this.state.silverpacketscar.map((item,i) => (
       <td key={g +9}>{item.Stars}</td>
       <td key={g+10}>{item.TicketStatus}</td>
       <td key={g+11}>{item.Price}</td>
+      <td key={g+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
+
       <td key={g+12}>{item.contacts}</td>
       <td key={g+13}>
           <select value={this.state.quanity} onChange={this.onChangequanity} >
@@ -423,6 +430,8 @@ const tableGcar = this.state.goldpacketscar.map((item,g=1000) => (
    <td key={g +9}>{item.Stars}</td>
    <td key={g+10}>{item.TicketStatus}</td>
    <td key={g+11}>{item.Price}</td>
+   <td key={g+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
+
    <td key={g+12}>{item.contacts}</td>
    <td key={g+13}>
        <select value={this.state.quanity} onChange={this.onChangequanity} >
@@ -458,8 +467,8 @@ const tableGhotel = this.state.goldpacketshotel.map((item,g=10000) => (
    <td key={g +8}>{item.name}</td>
 
    <td key={g +9}>{item.Stars}</td>
-   <td key={g+10}>{item.TicketStatus}</td>
    <td key={g+11}>{item.Price}</td>
+   <td key={g+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
    <td key={g+12}>{item.contacts}</td>
    <td key={g+13}>
        <select value={this.state.quanity} onChange={this.onChangequanity} >
@@ -541,7 +550,7 @@ return (
           <p> Please choose category </p>
           <p>
       <select value={this.state.choose} onChange={this.onChange} >
-        <option defaultValue>Empty</option>
+        <option defaultValue>Choose an Option</option>
         <option value="Flight">Fight Tickets</option>
         <option value="Car">Car Rental</option>
         <option value="Hotel">Hotel Booking</option>
@@ -565,6 +574,7 @@ return (
                   <th>Stars</th>
                   <th>TicketStatus</th>
                   <th>Price</th>
+                  <th>Date</th>
                   <th>Contacts</th>
                   <th>Quanity</th>
 
@@ -608,6 +618,7 @@ return (
         <th>Stars</th>
         <th>TicketStatus</th>
         <th>Price</th>
+        <th>Date</th>
         <th>Contacts</th>
         <th>Quanity</th>
 
@@ -646,8 +657,8 @@ return (
         <th>#</th>
         <th>Brand</th>
         <th>Stars</th>
-        <th>TicketStatus</th>
         <th>Price</th>
+        <th>Date</th>
         <th>Contacts</th>
         <th>Quanity</th>
 
