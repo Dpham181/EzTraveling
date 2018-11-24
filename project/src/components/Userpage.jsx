@@ -7,6 +7,7 @@ import {
 import './css/user.css';
 import {Redirect } from 'react-router-dom';
 import { Table, TableBody, TableHead , Button, Fa } from 'mdbreact';
+import StarRatings from 'react-star-ratings';
 
 class UserPage extends Component{
   constructor(props) {
@@ -23,6 +24,7 @@ class UserPage extends Component{
         quanity:'1',
         img:'',
         Booking:[],
+        
         redirect:false,
       gold:false,
       silver:false,
@@ -81,7 +83,7 @@ class UserPage extends Component{
              listFightG.push(
                {
                name:child.val().name,
-               Stars:child.val().Stars,
+               Stars:parseInt(child.val().Stars),
                TicketStatus:child.val().TicketStatus,
                Price:child.val().Price,
                contacts:child.val().contacts,
@@ -103,7 +105,7 @@ class UserPage extends Component{
              listcarG.push(
                {
                name:child.val().name,
-               Stars:child.val().Stars,
+               Stars:parseInt(child.val().Stars),
                TicketStatus:child.val().Status,
                Price:child.val().Price,
                contacts:child.val().contacts,
@@ -125,7 +127,7 @@ class UserPage extends Component{
              listhotelG.push(
                {
                name:child.val().name,
-               Stars:child.val().Stars,
+               Stars:parseInt(child.val().Stars),
                TicketStatus:child.val().Status,
                Price:child.val().Price,
                contacts:child.val().contacts,
@@ -158,7 +160,7 @@ __________________________*********************************_____________________
            listFightS.push(
                {
                 name:child.val().name,
-                Stars:child.val().Stars,
+                Stars:parseInt(child.val().Stars),
                 TicketStatus:child.val().TicketStatus,
                 Price:child.val().Price,
                 contacts:child.val().contacts,
@@ -183,7 +185,7 @@ __________________________*********************************_____________________
              listcarS.push(
                {
                name:child.val().name,
-               Stars:child.val().Stars,
+               Stars:parseInt(child.val().Stars),
                TicketStatus:child.val().Status,
                Price:child.val().Price,
                contacts:child.val().contacts,
@@ -204,7 +206,7 @@ __________________________*********************************_____________________
              listhotelS.push(
                {
                name:child.val().name,
-               Stars:child.val().Stars,
+               Stars: parseInt(child.val().Stars),
                TicketStatus:child.val().Status,
                Price:child.val().Price,
                contacts:child.val().contacts,
@@ -262,7 +264,20 @@ __________________________*********************************_____________________
 
        <td key={i+2}>{item.name}</td>
 
-       <td key={i+3}>{item.Stars}</td>
+       <td key={i+3}>
+
+       <StarRatings
+         rating={item.Stars}
+         starRatedColor="yellow"
+         starDimension='10px'
+         numberOfStars={5}
+         name='rating'
+       />
+
+
+
+
+       </td>
        <td key={i+4}>{item.TicketStatus}</td>
        <td key={i+5}>{item.Price}</td>
        <td key={i+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
@@ -305,9 +320,17 @@ __________________________*********************************_____________________
 
     <td key={i+2}>{item.name}</td>
 
-    <td key={i+3}>{item.Stars}</td>
+    <td key={i+3}>
+    <StarRatings
+         rating={item.Stars}
+         starRatedColor="yellow"
+         starDimension='10px'
+         numberOfStars={5}
+         name='rating'
+       />
+</td>
     <td key={i+5}>{item.Price}</td>
-    <td key={i+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
+    <td key={i+20}><input type="date" id="start" value="date" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
 
     <td key={i+6}>{item.contacts}</td>
     <td key={i+7}>
@@ -346,7 +369,15 @@ const tableScar = this.state.silverpacketscar.map((item,i) => (
 
    <td key={i+2}>{item.name}</td>
 
-   <td key={i+3}>{item.Stars}</td>
+   <td key={i+3}>
+    <StarRatings
+        rating={item.Stars}
+        starRatedColor="yellow"
+        starDimension='10px'
+        numberOfStars={5}
+        name='rating'
+      />
+</td>
    <td key={i+4}>{item.TicketStatus}</td>
    <td key={i+5}>{item.Price}</td>
    <td key={i+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
@@ -388,7 +419,15 @@ const tableScar = this.state.silverpacketscar.map((item,i) => (
 
       <td key={g +8}>{item.name}</td>
 
-      <td key={g +9}>{item.Stars}</td>
+      <td key={g +9}>
+      <StarRatings
+           rating={item.Stars}
+           starRatedColor="yellow"
+           starDimension='10px'
+           numberOfStars={5}
+           name='rating'
+         />
+</td>
       <td key={g+10}>{item.TicketStatus}</td>
       <td key={g+11}>{item.Price}</td>
       <td key={g+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
@@ -427,7 +466,16 @@ const tableGcar = this.state.goldpacketscar.map((item,g=1000) => (
 
    <td key={g +8}>{item.name}</td>
 
-   <td key={g +9}>{item.Stars}</td>
+   <td key={g +9}>
+   <StarRatings
+     rating={item.Stars}
+     starRatedColor="yellow"
+     starDimension='10px'
+     numberOfStars={5}
+     name='rating'
+   />
+
+   </td>
    <td key={g+10}>{item.TicketStatus}</td>
    <td key={g+11}>{item.Price}</td>
    <td key={g+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
@@ -466,7 +514,21 @@ const tableGhotel = this.state.goldpacketshotel.map((item,g=10000) => (
 
    <td key={g +8}>{item.name}</td>
 
-   <td key={g +9}>{item.Stars}</td>
+   <td key={g +9}>
+
+
+   <StarRatings
+     rating={item.Stars}
+     starRatedColor="yellow"
+     starDimension='10px'
+     numberOfStars={5}
+     name='rating'
+   />
+
+
+
+
+   </td>
    <td key={g+11}>{item.Price}</td>
    <td key={g+20}><input type="date" id="start" name="trip-start" min="2018-01-01" max="2020-12-31"></input></td>
    <td key={g+12}>{item.contacts}</td>

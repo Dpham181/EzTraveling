@@ -25,30 +25,49 @@ class Header extends Component{
 class Headeruser extends Component{
   constructor(props) {
     super(props);
+    // set all initial state
     this.state={
       useremail:[],
       cartBooking: [],
+      purchasedHistory:[],
       userid:'',
-      modal: false
+      modal: false,
+      modal2:false
 
 
     }
+    // binding all the funtions to get data or insert data with the state
     this.getitems = this.getitems.bind(this);
     this.removeallitems = this.removeallitems.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.toggle2 = this.toggle2.bind(this);
+
     this.getitemwithtoggle = this.getitemwithtoggle.bind(this);
     this.removealltoggle = this.removealltoggle.bind(this);
     this.removeoneitem = this.removeoneitem.bind(this);
+    this.checkout = this.checkout.bind(this);
+    this.checkoutwithtoggle = this.checkoutwithtoggle.bind(this);
+
+    this.purchasedHistory = this.purchasedHistory.bind(this);
+
+    this.purchaedwithtoggle = this.purchaedwithtoggle.bind(this);
+
   }
 
-
+  // turn on off modal
   toggle() {
     this.setState({
       modal: !this.state.modal
     });
   }
+  toggle2() {
+    this.setState({
+      modal2: !this.state.modal2
+    });
+  }
 
-
+  // temporary check out to keep data before final booking
+  // temporary record on database
   getitems(){
     var userid = this.state.userid;
 
@@ -89,7 +108,60 @@ class Headeruser extends Component{
     console.log(this.state.carttotal);
 
   }
+// checkout under the user id no cancel
+  checkout(){
+    var userid = this.state.userid;
 
+    let today = new Date().toLocaleDateString();
+    var inum = Math.floor((Math.random() * 100) + 1);
+
+
+
+  realdb.ref(`users/${userid}/Purchased/${inum}`).set({
+    date: today,
+    items:  this.state.cartBooking,
+    total:  this.state.carttotal
+
+});
+
+
+  }
+
+checkoutwithtoggle(){
+  this.toggle();
+  this.checkout();
+  this.removeallitems();
+}
+  // getting the transition purchasedHistory
+  purchasedHistory(){
+    var transition = [];
+    var userid = this.state.userid;
+    const purchased = realdb.ref().child(`users/${userid}/Purchased`);
+    purchased.once("value", snap => {
+            snap.forEach(child => {
+                  transition.push(
+
+                    {
+                      allitems: child.val().items,
+                      total: child.val().total
+                    }
+                  );
+            });
+
+
+            this.setState({purchasedHistory:transition});
+            console.log(this.state.purchasedHistory);
+
+  });
+
+}
+purchaedwithtoggle(){
+  this.toggle2();
+  this.purchasedHistory();
+}
+  // react cant run two function in the same element
+  // comp 2 funtions to make it run on each tag element
+  // when clicked do two things : 1) get or del data . 2) turn off modal as the same time
   getitemwithtoggle(){
     this.toggle();
     this.getitems();
@@ -137,6 +209,7 @@ class Headeruser extends Component{
 
 
   render() {
+    // mapping data with each element s tag
    const cunrrentuser = this.state.useremail.map((data,i)=> <p key={i}>Welcome !! {data}</p>);
    const cartviewtable = this.state.cartBooking.map((item,i) => (
 
@@ -156,7 +229,6 @@ class Headeruser extends Component{
 
 
   </tr>));
-
 
       return (
 
@@ -180,6 +252,14 @@ class Headeruser extends Component{
      <p>  {this.state.cartBooking.length} Items in Cart</p>
 
       </NavItem>
+
+
+      <NavItem eventKey={4}  onClick={this.purchaedwithtoggle}>
+      <Glyphicon   className ="shake" glyph="glyphicon glyphicon-shopping-cart" />
+
+
+
+       </NavItem>
 
     </Nav>
   </Navbar.Collapse>
@@ -228,12 +308,28 @@ class Headeruser extends Component{
 
           <ModalFooter>
             <Button color="secondary" onClick={this.removealltoggle}>Cancel All</Button>
-            <Button color="primary">Booking Now</Button>
+            <Button color="primary" onClick={this.checkoutwithtoggle}>Booking Now</Button>
           </ModalFooter>
         </Modal>
     </Container>)
     :null
   }
+
+
+
+  {this.state.modal2
+    ?(
+      <Container>
+            <Modal isOpen={this.state.modal2} toggle={this.toggle2} size="fluid">
+            <ModalHeader toggle={() => this.toggle2(4)}> Your Purchased History</ModalHeader>
+            <ModalBody>
+
+            </ModalBody>
+
+          </Modal>
+      </Container>)
+      :null
+    }
   </div>
 
     </div>
