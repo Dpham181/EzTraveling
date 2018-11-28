@@ -1,3 +1,4 @@
+
 import React, {
   Component
 } from 'react';
@@ -24,7 +25,7 @@ class UserPage extends Component{
         quanity:'1',
         img:'',
         Booking:[],
-        
+
         redirect:false,
       gold:false,
       silver:false,

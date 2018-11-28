@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Navbar , NavItem, Nav, Glyphicon} from 'react-bootstrap';
+import { Navbar , DropdownButton, MenuItem, NavItem, Nav, Glyphicon} from 'react-bootstrap';
 import { auth, realdb} from './firebase/firebase';
 import { Modal } from 'react-router-modal';
 import { Container, Button, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
 
 import './css/header.css';
-
 
 class Header extends Component{
   render() {
@@ -30,6 +29,8 @@ class Headeruser extends Component{
       useremail:[],
       cartBooking: [],
       purchasedHistory:[],
+      purchasedItems:[],
+
       userid:'',
       modal: false,
       modal2:false
@@ -142,15 +143,20 @@ checkoutwithtoggle(){
                   transition.push(
 
                     {
+                      date: child.val().date,
+
                       allitems: child.val().items,
                       total: child.val().total
                     }
                   );
-            });
 
+
+            });
 
             this.setState({purchasedHistory:transition});
             console.log(this.state.purchasedHistory);
+            console.log(this.state.purchasedItems);
+
 
   });
 
@@ -229,13 +235,33 @@ purchaedwithtoggle(){
 
 
   </tr>));
+  const purchasedHistory = this.state.purchasedHistory.map((data,i)=>
+
+  <tr key = {i+1}>
+
+  <td key={i+2}>{data.date}</td>
+  <td key={i+4}>{data.allitems.length}</td>
+  <td key={i+3}>{data.total} $</td>
+
+
+  </tr>
+
+);
+
+//  const purchasedItems = this.state.purchasedItems.map((data,i)=> <p key={i}>{data.name}</p>);
 
       return (
 
         <div>
 <Navbar inverse collapseOnSelect>
   <Navbar.Header>
-{cunrrentuser}
+
+<DropdownButton title={cunrrentuser}  bsStyle="primary" bsSize="sm">
+  <MenuItem eventKey="1"  onClick={this.purchaedwithtoggle}>Purchased History</MenuItem>
+  <MenuItem eventKey="2">Profile</MenuItem>
+  <MenuItem eventKey="3">Help Supports</MenuItem>
+</DropdownButton>
+
   </Navbar.Header>
   <Navbar.Collapse>
     <Nav pullRight>
@@ -254,12 +280,7 @@ purchaedwithtoggle(){
       </NavItem>
 
 
-      <NavItem eventKey={4}  onClick={this.purchaedwithtoggle}>
-      <Glyphicon   className ="shake" glyph="glyphicon glyphicon-shopping-cart" />
 
-
-
-       </NavItem>
 
     </Nav>
   </Navbar.Collapse>
@@ -323,8 +344,22 @@ purchaedwithtoggle(){
             <Modal isOpen={this.state.modal2} toggle={this.toggle2} size="fluid">
             <ModalHeader toggle={() => this.toggle2(4)}> Your Purchased History</ModalHeader>
             <ModalBody>
+            <table className="table table-striped">
+            <thead>
+            <tr >
+            <td>Date of Purchased</td>
+            <td>Total Booking </td>
 
-            </ModalBody>
+           <td>Final Price</td>
+              </tr>
+            </thead>
+            <tbody>
+             {purchasedHistory}
+            </tbody>
+
+
+            </table>
+           </ModalBody>
 
           </Modal>
       </Container>)
