@@ -610,6 +610,17 @@ return (
             this.state.gold|| this.state.silver
           ?(
           <div className="flex-selected">
+          <p>Please select a Destination </p>
+          <select class="locations">
+            <option defaultValue>Choose a Location</option>
+            <option value="San Francisco">San Francisco, CA</option>
+            <option value="San Diego">San Diego, CA</option>
+            <option value="Los Angeles">Los Angeles, CA</option>
+            <option value="NYC">New York City, NY</option>
+            <option value="Chicago">Chicagi, IL</option>
+            <option value="Charleston">Charleston, SC</option>
+            <option value="Las Vegas">Las Vegas, NV</option>
+          </select>
           <p> Please choose category </p>
           <p>
       <select value={this.state.choose} onChange={this.onChange} >
