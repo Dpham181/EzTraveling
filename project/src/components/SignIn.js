@@ -32,7 +32,14 @@ class SignInForm extends Component {
      this.onChange= this.onChange.bind(this);
   }
 
-
+  enterPressed(event) 
+  {
+    var code = event.keyCode || event.which;
+    //If enter key was enterd, try and login
+    if(code === 13) { //13 is the enter keycode
+        this.login(event);
+    } 
+}
 
 login(event){
   var email = this.state.email;
@@ -70,8 +77,8 @@ event.preventDefault();
                   <form >
                     <p className="h5 text-center mb-4">Sign In</p>
                     <div className="grey-text">
-                      <Input label="Your email"   name="email"  onChange={this.onChange} required icon="envelope" group type="email" validate error="wrong" success="right"/>
-                      <Input label="Your password"  name="password"  onChange={this.onChange} required icon="exclamation-triangle" group type="password" validate error="wrong" success="right"/>
+                      <Input label="Your email"   name="email"  onChange={this.onChange} required icon="envelope" group type="email" validate error="wrong" success="right" onKeyPress={this.enterPressed.bind(this)}/>
+                      <Input label="Your password"  name="password"  onChange={this.onChange} required icon="exclamation-triangle" group type="password" validate error="wrong" success="right" onKeyPress={this.enterPressed.bind(this)}/>
                     </div>
                     <div className="text-center">
                       <Button color="primary" onClick ={this.login} >Login In</Button>
